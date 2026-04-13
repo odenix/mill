@@ -163,15 +163,18 @@ object Util {
   }
 
   def parseHeaderData(scriptFile: os.Path): Result[HeaderData] = {
-    val headerDataOpt = mill.api.BuildCtx.withFilesystemCheckerDisabled {
-      if (!os.exists(scriptFile)) Result.Success("")
-      else mill.api.ExecResult.catchWrapException {
-        mill.constants.Util.readBuildHeader(scriptFile.toNIO, scriptFile.last, true)
-          .replace("\r", "")
+    if (scriptFile.ext == "pkl") mill.internal.pkl.PklParser.parseHeaderData(scriptFile)
+    else {
+      val headerDataOpt = mill.api.BuildCtx.withFilesystemCheckerDisabled {
+        if (!os.exists(scriptFile)) Result.Success("")
+        else mill.api.ExecResult.catchWrapException {
+          mill.constants.Util.readBuildHeader(scriptFile.toNIO, scriptFile.last, true)
+            .replace("\r", "")
+        }
       }
+      given upickle.Reader[HeaderData] = HeaderData.headerDataReader(scriptFile)
+      headerDataOpt.flatMap(parseYaml0(scriptFile, _, upickle.reader[HeaderData]))
     }
-    given upickle.Reader[HeaderData] = HeaderData.headerDataReader(scriptFile)
-    headerDataOpt.flatMap(parseYaml0(scriptFile, _, upickle.reader[HeaderData]))
   }
 
   def parseYaml0[T](

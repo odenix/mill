@@ -157,13 +157,9 @@ trait GroupExecution {
           currentResults ++ nestedResults
         }
 
+        val parsedHeaderData = mill.internal.Util.parseHeaderData(path).get
         val parsed0 = BufferedValue.Obj(
-          mill.internal.Util.parseYaml0(
-            path0.toString,
-            rawText.replace("\r", ""),
-            headerDataReader
-          ).get
-            .rest
+          parsedHeaderData.rest
             .map { case (k, v) => (BufferedValue.Str(k.value, k.index), v) }
             .to(mutable.ArrayBuffer),
           true,
@@ -172,7 +168,10 @@ trait GroupExecution {
         if ((path / "..").startsWith(workspace)) {
           rec(
             (path / "..").subRelativeTo(workspace).segments,
-            if (path == os.Path(rootModule.moduleDirJava) / "../build.mill.yaml") {
+            if (
+              path == os.Path(rootModule.moduleDirJava) / "../build.mill.yaml" ||
+              path == os.Path(rootModule.moduleDirJava) / "../build.pkl"
+            ) {
               parsed0
                 .value0
                 .collectFirst { case (BufferedValue.Str("mill-build", _), v) => v }

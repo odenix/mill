@@ -19,6 +19,7 @@ object `package` extends MillPublishScalaModule {
     Deps.upickle,
     Deps.pprint,
     Deps.fansi,
+    Deps.pklCore,
     Deps.snakeyamlEngine
   )
 }

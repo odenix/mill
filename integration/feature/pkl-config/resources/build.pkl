@@ -1,0 +1,13 @@
+amends "pkl/JavaModule.pkl"
+
+import "pkl/JavaModule.pkl"
+
+sources { "app-src/" }
+moduleDeps { "lib" }
+
+modules {
+  ["lib"] = new JavaModule {
+    sources { "lib-src/" }
+    javacOptions { "-Xlint:deprecation" }
+  }
+}

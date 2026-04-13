@@ -42,7 +42,7 @@ object CodeGen {
   ): Seq[(original: os.Path, generated: os.Path)] = {
     val scriptSources = allScriptCode.keys.toSeq.sorted
     val parsedYamlHeaderData = scriptSources
-      .filter(_.last.endsWith(".yaml"))
+      .filter(p => p.last.endsWith(".yaml") || p.last.endsWith(".pkl"))
       .map { p =>
         mill.internal.Util.parseHeaderData(p) match {
           case Result.Success(v) => p -> v
@@ -51,7 +51,7 @@ object CodeGen {
       }
       .toMap
 
-    // Identify .mill.yaml files marked with `mill-experimental-precompiled-module: true`.
+    // Identify declarative build files marked with `mill-experimental-precompiled-module: true`.
     // These are skipped during codegen and instantiated reflectively at runtime.
     val precompiledModulePaths: Set[os.Path] = parsedYamlHeaderData.collect {
       case (path, headerData) if headerData.`mill-experimental-precompiled-module`.value => path
@@ -94,13 +94,31 @@ object CodeGen {
 
     val mappings = new ListBuffer[(original: os.Path, generated: os.Path)]
 
-    // If the build contains both a *.mill.yaml and a *.mill file (same path but for one that has .yaml too),
-    // we ignore the *.mill one. Maybe we could warn users about that?
+    // If the build contains a declarative build file and a sibling .mill build file,
+    // prefer the declarative one for the PoC.
     val ignoreSources = scriptSources
-      .filter(_.last.endsWith(".mill.yaml"))
+      .filter(p =>
+        p.last == "build.pkl" ||
+        p.last == "package.pkl" ||
+        p.last.endsWith(".mill.yaml")
+      )
       .filter(!precompiledModulePaths.contains(_))
-      .map { millYamlSource =>
-        millYamlSource / os.up / millYamlSource.last.stripSuffix(".yaml")
+      .flatMap { declarativeSource =>
+        declarativeSource.last match {
+          case "build.pkl" =>
+            Seq(
+              declarativeSource / os.up / "build.mill",
+              declarativeSource / os.up / "build.mill.yaml"
+            )
+          case "package.pkl" =>
+            Seq(
+              declarativeSource / os.up / "package.mill",
+              declarativeSource / os.up / "package.mill.yaml"
+            )
+          case name if name.endsWith(".yaml") =>
+            Seq(declarativeSource / os.up / name.stripSuffix(".yaml"))
+          case _ => Nil
+        }
       }
       .toSet
     for (
@@ -177,8 +195,13 @@ object CodeGen {
         // the precompiled module at runtime using the class from its extends clause
         val (precompiledAliasesDefs, precompiledAliases) = precompiledChildNames
           .flatMap { c =>
-            val scriptFile = scriptFolderPath / c / "package.mill.yaml"
-            parsedYamlHeaderData.get(scriptFile).flatMap { headerData =>
+            val scriptFileCandidates = Seq(
+              scriptFolderPath / c / "package.pkl",
+              scriptFolderPath / c / "package.mill.yaml"
+            )
+            scriptFileCandidates.iterator.collectFirst(Function.unlift { scriptFile =>
+              parsedYamlHeaderData.get(scriptFile).map(scriptFile -> _)
+            }).flatMap { case (scriptFile, headerData) =>
               headerData.`extends`.value.value.headOption.map { extendsLocated =>
                 val lhs = backtickWrap(c)
                 val extendsClass = extendsLocated.value
@@ -237,7 +260,7 @@ object CodeGen {
         )
       }
 
-      if (scriptPath.last.endsWith(".yaml")) {
+      if (scriptPath.last.endsWith(".yaml") || scriptPath.last.endsWith(".pkl")) {
         val newParent =
           if (segments.isEmpty) "_root_.mill.util.MainRootModule"
           else "_root_.mill.api.internal.SubfolderModule(_root_.build_.package_.millDiscover)"

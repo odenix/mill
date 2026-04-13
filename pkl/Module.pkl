@@ -1,0 +1,85 @@
+open module Module
+
+import "Module.pkl"
+
+class License {
+  name: String
+  url: String
+}
+
+class VersionControl {
+  url: String
+  connection: String
+  developerConnection: String
+  tag: String?
+}
+
+class Developer {
+  id: String
+  name: String
+  url: String
+  organization: String?
+  organizationUrl: String?
+}
+
+class PomSettings {
+  description: String
+  organization: String
+  url: String
+  licenses: Listing<License>
+  versionControl: VersionControl
+  developers: Listing<Developer>
+}
+
+class MillBuild {
+  bspScriptIgnore: Listing<String>?
+
+  repositories: Listing<String>?
+
+  mvnDeps: Listing<String>?
+  compileMvnDeps: Listing<String>?
+  runMvnDeps: Listing<String>?
+  bomMvnDeps: Listing<String>?
+  depManagement: Listing<String>?
+}
+
+millVersion: String?
+millJvmVersion: String?
+millJvmIndexVersion: String?
+millJvmOpts: Listing<String>?
+millOpts: Listing<String>?
+millAllowNestedBuildMill: Boolean?
+millRepositories: Listing<String>?
+millBuild: MillBuild?
+
+moduleDeps: Listing<String>?
+compileModuleDeps: Listing<String>?
+runModuleDeps: Listing<String>?
+bomModuleDeps: Listing<String>?
+
+mvnDeps: Listing<String>?
+compileMvnDeps: Listing<String>?
+runMvnDeps: Listing<String>?
+bomMvnDeps: Listing<String>?
+depManagement: Listing<String>?
+
+sourcesFolders: Listing<String>?
+sources: Listing<String>?
+resources: Listing<String>?
+
+forkArgs: Listing<String>?
+
+artifactName: String?
+pomSettings: PomSettings?
+publishVersion: String?
+
+testParallelism: Boolean?
+testSandboxWorkingDir: Boolean?
+testFramework: String?
+
+repositories: Listing<String>?
+
+// Postponed for the first PoC.
+// experimentalPrecompiledModule: Boolean?
+
+modules: Mapping<String, Module>?

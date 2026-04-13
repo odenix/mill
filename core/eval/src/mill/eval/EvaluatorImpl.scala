@@ -212,7 +212,9 @@ final class EvaluatorImpl(
       val filePath = os.Path(module.moduleCtx.fileName).relativeTo(workspace)
 
       val isRootBuildFile =
-        filePath == os.sub / "mill-build/build.mill" || filePath == os.sub / "build.mill.yaml"
+        filePath == os.sub / "mill-build/build.mill" ||
+          filePath == os.sub / "build.mill.yaml" ||
+          filePath == os.sub / "build.pkl"
 
       val millKeys = mill.constants.ConfigConstants.all()
       val validKeys =
@@ -237,7 +239,7 @@ final class EvaluatorImpl(
         val message = mill.resolve.ResolveNotFoundHandler.findMostSimilar(k, validKeys) match {
           case None =>
             if (millKeys.contains(k))
-              s"key ${literalize(k)} can only be used in your root `build.mill` or `build.mill.yaml` file"
+              s"key ${literalize(k)} can only be used in your root `build.mill`, `build.mill.yaml`, or `build.pkl` file"
             else doesNotOverridePrefix
           case Some(similar) =>
             s"$doesNotOverridePrefix, did you mean ${literalize(similar)}?"

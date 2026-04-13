@@ -1,0 +1,10 @@
+open module ScalaModule
+
+extends "Module.pkl"
+
+scalaVersion: String?
+scalacOptions: Listing<String>?
+scalacPluginMvnDeps: Listing<String>?
+scalaJSVersion: String?
+moduleKind: String?
+scalaNativeVersion: String?

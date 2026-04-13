@@ -54,7 +54,7 @@ object DiscoveredBuildFiles {
           try Right(mill.constants.Util.readBuildHeader(s.toNIO, s.last))
           catch { case e: RuntimeException => Left(e.getMessage) }
 
-        if (s.last.endsWith(".yaml")) seenScripts(s) = os.read(s)
+        if (s.last.endsWith(".yaml") || s.last.endsWith(".pkl")) seenScripts(s) = os.read(s)
         else buildHeaderError.flatMap(_ => parser.splitScript(content, fileName, colored)) match {
           case Right((prefix, pkgs, stmts)) =>
             val importSegments = pkgs.mkString(".")

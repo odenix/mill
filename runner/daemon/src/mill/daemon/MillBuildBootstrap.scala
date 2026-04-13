@@ -166,7 +166,8 @@ class MillBuildBootstrap(
       depth: Int
   ): EvaluatorApi = {
     val currentRoot = recRoot(topLevelProjectRoot, depth)
-    val staticBuildOverrides0 = tryReadParent(currentRoot, "build.mill.yaml")
+    val staticBuildOverrides0 = tryReadParent(currentRoot, "build.pkl")
+      .orElse(tryReadParent(currentRoot, "build.mill.yaml"))
       .orElse(tryReadParent(currentRoot, "build.mill"))
 
     val staticBuildOverrideFiles =

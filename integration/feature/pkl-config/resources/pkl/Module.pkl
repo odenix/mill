@@ -1,0 +1,39 @@
+open module Module
+
+import "Module.pkl"
+
+millVersion: String?
+millJvmVersion: String?
+millJvmIndexVersion: String?
+millJvmOpts: Listing<String>?
+millOpts: Listing<String>?
+millAllowNestedBuildMill: Boolean?
+millRepositories: Listing<String>?
+
+moduleDeps: Listing<String>?
+compileModuleDeps: Listing<String>?
+runModuleDeps: Listing<String>?
+bomModuleDeps: Listing<String>?
+
+mvnDeps: Listing<String>?
+compileMvnDeps: Listing<String>?
+runMvnDeps: Listing<String>?
+bomMvnDeps: Listing<String>?
+depManagement: Listing<String>?
+
+sourcesFolders: Listing<String>?
+sources: Listing<String>?
+resources: Listing<String>?
+
+forkArgs: Listing<String>?
+
+artifactName: String?
+publishVersion: String?
+
+testParallelism: Boolean?
+testSandboxWorkingDir: Boolean?
+testFramework: String?
+
+repositories: Listing<String>?
+
+modules: Mapping<String, Module>?

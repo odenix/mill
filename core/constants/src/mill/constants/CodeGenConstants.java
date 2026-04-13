@@ -22,18 +22,19 @@ public class CodeGenConstants {
   /**
    * The name of the root build file
    */
-  public static final List<String> rootBuildFileNames = List.of("build.mill.yaml", "build.mill");
+  public static final List<String> rootBuildFileNames =
+      List.of("build.pkl", "build.mill.yaml", "build.mill");
 
   /**
    * The name of any sub-folder build files
    */
   public static final List<String> nestedBuildFileNames =
-      List.of("package.mill.yaml", "package.mill");
+      List.of("package.pkl", "package.mill.yaml", "package.mill");
 
   /**
    * The extensions used by build files
    */
-  public static final List<String> buildFileExtensions = List.of("mill.yaml", "mill");
+  public static final List<String> buildFileExtensions = List.of("pkl", "mill.yaml", "mill");
 
   /**
    * The user-facing name for the root of the module tree.
