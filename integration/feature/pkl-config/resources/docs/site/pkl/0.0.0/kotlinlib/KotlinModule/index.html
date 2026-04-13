@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <title>KotlinModule (pkl/kotlinlib:0.0.0) • Mill Pkl Schema</title>
+    <script src="../../../../scripts/pkldoc.js" defer="defer"></script>
+    <script type="module">
+      import perPackageData from "../../../../data/pkl/_/kotlinlib/KotlinModule/index.json" with { type: "json" }
+      import perPackageVersionData from "../../../../data/pkl/0.0.0/kotlinlib/KotlinModule/index.json" with { type: "json" }
+
+      runtimeData.knownVersions(perPackageData.knownVersions, "0.0.0");
+      runtimeData.knownUsagesOrSubtypes("known-subtypes", perPackageVersionData.knownSubtypes);
+      runtimeData.knownUsagesOrSubtypes("known-usages", perPackageVersionData.knownUsages);
+            </script>
+    <script src="../../../../scripts/scroll-into-view.min.js" defer="defer"></script>
+    <link href="../../../../styles/pkldoc.css" media="screen" type="text/css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../../../../images/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16.png">
+  </head>
+  <body onload="onLoad()">
+    <header>
+      <div id="doc-title"><a href="../../../../index.html">Mill Pkl Schema</a></div>
+      <div id="search"><label for="search-input"><i id="search-icon" class="material-icons">search</i></label><input id="search-input" type="search" placeholder="Click or press 'S' to search this package" autocomplete="off" data-package-name="pkl" data-package-version="0.0.0" data-package-url-prefix="../../" data-module-name="pkl.kotlinlib.KotlinModule" data-root-url-prefix="../../../../"></div>
+    </header>
+    <main><a class="declaration-parent-link" href="../../../../index.html">Mill Pkl Schema</a> &gt; <a class="declaration-parent-link" href="../../index.html">pkl</a>
+      <h1 id="declaration-title">pkl.kotlinlib.KotlinModule<span id="declaration-version">0.0.0</span></h1>
+      <ul class="member-group-links">
+        <li><a href="#_overview">Overview</a></li>
+        <li><a href="#_properties">Properties</a></li>
+        <li><a href="#_methods">Methods</a></li>
+        <li><a href="#_classes">Classes</a></li>
+        <li><a href="#_type-aliases">Type Aliases</a></li>
+      </ul>
+      <div id="_overview" class="anchor"> </div>
+      <div id="_declaration" class="member with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i>
+        <div class="member-signature">open module <span class="name-decl">pkl.kotlinlib.KotlinModule</span> extends <a href="../../javalib/JavaModule/index.html" class="name-ref">pkl.javalib.JavaModule</a></div>
+        <div class="doc-comment"><p>Core schema for Kotlin modules.</p></div>
+        <dl class="member-info">
+          <dt class="">Module URI:</dt>
+          <dd><span class="import-uri">https://example.invalid/pkl/kotlinlib/KotlinModule.pkl</span><i class="copy-uri-button material-icons">content_copy</i></dd>
+          <dt class="">Source code:</dt>
+          <dd><a href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl">KotlinModule.pkl</a></dd>
+          <dt class="runtime-data hidden">Known subtypes in package:</dt>
+          <dd id="known-subtypes" class="runtime-data hidden"></dd>
+          <dt class="runtime-data hidden">Known usages in package:</dt>
+          <dd id="known-usages" class="runtime-data hidden"></dd>
+          <dt class="runtime-data hidden">All versions:</dt>
+          <dd id="known-versions" class="runtime-data hidden"></dd>
+        </dl>
+        <div class="doc-comment expandable hidden collapsed"><p>This corresponds to Mill's
+<a href="https://mill-build.org/api/latest/mill/kotlinlib/KotlinModule.html">mill.kotlinlib.KotlinModule</a>.</p></div>
+      </div>
+      <div class="member-group">
+        <div id="_properties" class="anchor"> </div>
+        <h2 class="member-group-title">Properties<span class="toggle-inherited-members">(<span class="toggle-inherited-members-link button-link">show inherited</span>)</span></h2>
+        <ul>
+          <li>
+            <div id="output" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#output">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">hidden </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">output</span>: <a href="../../base/ModuleOutput.html" class="name-ref">ModuleOutput</a><span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L104-L137">Source</a></div>
+                <div class="doc-comment"><p>The output of this module.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>Defaults to all module properties rendered as either Pcf or the format specified on the
+command line.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millVersion" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millVersion</span>: <a href="../../base/String.html" class="name-ref">String</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L110-L110">Source</a></div>
+                <div class="doc-comment"><p>Mill version used for this build.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millJvmVersion" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millJvmVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millJvmVersion</span>: <a href="../../base/String.html" class="name-ref">String</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L113-L113">Source</a></div>
+                <div class="doc-comment"><p>JVM version Mill should use by default for Java, Scala, and Kotlin modules.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millJvmIndexVersion" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millJvmIndexVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millJvmIndexVersion</span>: <a href="../../base/String.html" class="name-ref">String</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L116-L116">Source</a></div>
+                <div class="doc-comment"><p>Version of the JVM index used to resolve <a href="index.html#millJvmVersion"><code>millJvmVersion</code></a>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millJvmOpts" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millJvmOpts">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millJvmOpts</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L119-L119">Source</a></div>
+                <div class="doc-comment"><p>JVM options passed to the Mill process itself.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millOpts" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millOpts">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millOpts</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L122-L122">Source</a></div>
+                <div class="doc-comment"><p>Additional Mill command-line options.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millAllowNestedBuildMill" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millAllowNestedBuildMill">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millAllowNestedBuildMill</span>: <a href="../../base/Boolean.html" class="name-ref">Boolean</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L125-L125">Source</a></div>
+                <div class="doc-comment"><p>Whether nested <code>build.mill</code> files are allowed below the workspace root.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millRepositories" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millRepositories">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millRepositories</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L129-L129">Source</a></div>
+                <div class="doc-comment"><p>Global repositories used for resolving Mill's own dependencies and as
+default repositories for dependency resolution.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="millBuild" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#millBuild">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">millBuild</span>: <a href="../../api/Module/MillBuild.html" class="name-ref">MillBuild</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L132-L132">Source</a></div>
+                <div class="doc-comment"><p>Configuration for the <code>mill-build</code> meta-build.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="moduleDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#moduleDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">moduleDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L135-L135">Source</a></div>
+                <div class="doc-comment"><p>Direct module dependencies of this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="compileModuleDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#compileModuleDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">compileModuleDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L138-L138">Source</a></div>
+                <div class="doc-comment"><p>Compile-only direct module dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="runModuleDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#runModuleDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">runModuleDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L141-L141">Source</a></div>
+                <div class="doc-comment"><p>Runtime-only direct module dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="bomModuleDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#bomModuleDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">bomModuleDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L144-L144">Source</a></div>
+                <div class="doc-comment"><p>Bill of Material (BOM) module dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="mvnDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#mvnDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">mvnDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Module/index.html#DepCoordinate" class="name-ref">DepCoordinate</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L147-L147">Source</a></div>
+                <div class="doc-comment"><p>Additional Maven / Ivy dependencies for this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="compileMvnDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#compileMvnDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">compileMvnDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Module/index.html#DepCoordinate" class="name-ref">DepCoordinate</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L150-L150">Source</a></div>
+                <div class="doc-comment"><p>Compile-only Maven / Ivy dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="runMvnDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#runMvnDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">runMvnDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Module/index.html#DepCoordinate" class="name-ref">DepCoordinate</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L153-L153">Source</a></div>
+                <div class="doc-comment"><p>Runtime-only Maven / Ivy dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="bomMvnDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#bomMvnDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">bomMvnDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Module/index.html#DepCoordinate" class="name-ref">DepCoordinate</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L156-L156">Source</a></div>
+                <div class="doc-comment"><p>Bill of Material (BOM) dependencies for this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="depManagement" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#depManagement">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">depManagement</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Module/index.html#DepCoordinate" class="name-ref">DepCoordinate</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L160-L160">Source</a></div>
+                <div class="doc-comment"><p>Dependency-management entries that can override versions and exclusions of
+transitive dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="sourcesFolders" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#sourcesFolders">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">sourcesFolders</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L163-L163">Source</a></div>
+                <div class="doc-comment"><p>Source-root folders used by the module's default <code>sources</code> task.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="sources" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#sources">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">sources</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L166-L166">Source</a></div>
+                <div class="doc-comment"><p>Sources to compile for this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="resources" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#resources">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">resources</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L169-L169">Source</a></div>
+                <div class="doc-comment"><p>Resource directories included on the runtime classpath.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="forkArgs" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#forkArgs">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">forkArgs</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L172-L172">Source</a></div>
+                <div class="doc-comment"><p>Command-line parameters passed to forked JVMs.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="artifactName" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#artifactName">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">artifactName</span>: <a href="../../api/Module/index.html#NonSlashString" class="name-ref">NonSlashString</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L175-L175">Source</a></div>
+                <div class="doc-comment"><p>Published artifact name.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="pomSettings" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#pomSettings">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">pomSettings</span>: <a href="../../api/Module/PomSettings.html" class="name-ref">PomSettings</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L178-L178">Source</a></div>
+                <div class="doc-comment"><p>POM metadata published with this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="publishVersion" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#publishVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">publishVersion</span>: <a href="../../api/Module/index.html#NonSlashString" class="name-ref">NonSlashString</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L181-L181">Source</a></div>
+                <div class="doc-comment"><p>Artifact version used when publishing this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="testParallelism" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#testParallelism">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">testParallelism</span>: <a href="../../base/Boolean.html" class="name-ref">Boolean</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L184-L184">Source</a></div>
+                <div class="doc-comment"><p>Whether this module's tests may run in parallel in multiple JVM processes.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="testSandboxWorkingDir" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#testSandboxWorkingDir">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">testSandboxWorkingDir</span>: <a href="../../base/Boolean.html" class="name-ref">Boolean</a>?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L188-L188">Source</a></div>
+                <div class="doc-comment"><p>Whether test subprocesses should run in their sandbox working directory
+instead of the project root.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="testFramework" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#testFramework">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">testFramework</span>: (&quot;mill.testng.TestNGFramework&quot;|&quot;com.novocode.junit.JUnitFramework&quot;|&quot;com.github.sbt.junit.jupiter.api.JupiterFramework&quot;|&quot;org.scalatest.tools.Framework&quot;|&quot;org.specs2.runner.Specs2Framework&quot;|&quot;utest.runner.Framework&quot;|&quot;munit.Framework&quot;|&quot;weaver.framework.CatsEffect&quot;|&quot;zio.test.sbt.ZTestFramework&quot;|<a href="../../base/String.html" class="name-ref">String</a>)?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L192-L203">Source</a></div>
+                <div class="doc-comment"><p>Fully qualified <code>sbt.testing</code> framework implementation used to discover and
+run tests.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="repositories" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#repositories">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">repositories</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L206-L206">Source</a></div>
+                <div class="doc-comment"><p>Extra repositories used to resolve this module's dependencies.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="modules" class="anchor"> </div>
+            <div class="member with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#modules">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">modules</span>: <a href="../../base/Mapping.html" class="name-ref">Mapping</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>, (module|<a href="../../base/Module.html" class="name-ref">Module</a>)&gt;?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L33-L33">Source</a></div>
+                <div class="doc-comment"><p>Nested child modules keyed by module name.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>If no module type is specified, defaults to <a href="not_found"><code>KotlinModule</code></a>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="traits" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#traits">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">traits</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../api/Trait/index.html" class="name-ref">Trait</a>&gt;?<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L214-L214">Source</a></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="javacOptions" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#javacOptions">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">javacOptions</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../javalib/JavaModule/index.html" class="name-ref">pkl.javalib.JavaModule</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/javalib.JavaModule.pkl#L13-L13">Source</a></div>
+                <div class="doc-comment"><p>Options passed to the Java compiler.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>When a custom JVM is configured, this may also include runtime flags for the
+compiler JVM such as <code>-J-Xss8m</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="errorProneDeps" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#errorProneDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">errorProneDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../javalib/JavaModule/index.html" class="name-ref">pkl.javalib.JavaModule</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/javalib.JavaModule.pkl#L16-L16">Source</a></div>
+                <div class="doc-comment"><p>Error Prone dependencies for builds that use <code>ErrorProneModule</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="errorProneOptions" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#errorProneOptions">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">errorProneOptions</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../javalib/JavaModule/index.html" class="name-ref">pkl.javalib.JavaModule</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/javalib.JavaModule.pkl#L19-L19">Source</a></div>
+                <div class="doc-comment"><p>Additional Error Prone checks and configuration options.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="errorProneJavacEnableOptions" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#errorProneJavacEnableOptions">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">errorProneJavacEnableOptions</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<span class="context"> (<a href="../../javalib/JavaModule/index.html" class="name-ref">pkl.javalib.JavaModule</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/javalib.JavaModule.pkl#L22-L22">Source</a></div>
+                <div class="doc-comment"><p>Extra <code>javac</code> flags used to enable Error Prone integration.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="kotlinVersion" class="anchor"> </div>
+            <div class="member"><a class="member-selflink material-icons" href="#kotlinVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">kotlinVersion</span>: <a href="../../base/String.html" class="name-ref">String</a>?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L12-L12">Source</a></div>
+                <div class="doc-comment"><p>Kotlin version used for the compiler, API level, and language level.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="kotlinLanguageVersion" class="anchor"> </div>
+            <div class="member with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#kotlinLanguageVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">kotlinLanguageVersion</span>: <a href="index.html#KotlinLanguageOrApiVersion" class="name-ref">KotlinLanguageOrApiVersion</a>?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L17-L17">Source</a></div>
+                <div class="doc-comment"><p>Kotlin compiler language version.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>By default, Mill derives this from <a href="index.html#kotlinVersion"><code>kotlinVersion</code></a>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="kotlinApiVersion" class="anchor"> </div>
+            <div class="member with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#kotlinApiVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">kotlinApiVersion</span>: <a href="index.html#KotlinLanguageOrApiVersion" class="name-ref">KotlinLanguageOrApiVersion</a>?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L22-L22">Source</a></div>
+                <div class="doc-comment"><p>Kotlin compiler API version.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>By default, Mill derives this from <a href="index.html#kotlinLanguageVersion"><code>kotlinLanguageVersion</code></a>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="kotlincOptions" class="anchor"> </div>
+            <div class="member"><a class="member-selflink material-icons" href="#kotlincOptions">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">kotlincOptions</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L25-L25">Source</a></div>
+                <div class="doc-comment"><p>Additional options passed to the Kotlin compiler.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="kotlincPluginMvnDeps" class="anchor"> </div>
+            <div class="member"><a class="member-selflink material-icons" href="#kotlincPluginMvnDeps">link</a>
+              <div class="member-left">
+                <div class="member-modifiers"></div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">kotlincPluginMvnDeps</span>: <a href="../../base/Listing.html" class="name-ref">Listing</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;?<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L28-L28">Source</a></div>
+                <div class="doc-comment"><p>Kotlin compiler plugins resolved from Maven / Ivy repositories.</p></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="member-group">
+        <div id="_methods" class="anchor"> </div>
+        <h2 class="member-group-title">Methods<span class="toggle-inherited-members">(<span class="toggle-inherited-members-link button-link">show inherited</span>)</span></h2>
+        <ul>
+          <li>
+            <div id="getClass()" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#getClass()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">getClass</span>(): <a href="../../base/Class.html" class="name-ref">Class</a><span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L50-L50">Source</a></div>
+                <div class="doc-comment"><p>Returns the class of <code>this</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="toString()" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#toString()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">toString</span>(): <a href="../../base/String.html" class="name-ref">String</a><span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L55-L55">Source</a></div>
+                <div class="doc-comment"><p>Returns a string representation of <code>this</code>.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>This method is used to convert the values of string interpolation expressions to strings.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="ifNonNull()" class="anchor"> </div>
+            <div id="ifNonNull().Result" class="anchor-param1"> </div>
+            <div id="ifNonNull().transform" class="anchor-param2"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#ifNonNull()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">ifNonNull</span>&lt;<a class="param1">Result</a>&gt;(<span class="param2">transform</span>: (<a href="../../base#NonNull" class="name-ref">NonNull</a>) -&gt; <a href="index.html#ifNonNull().Result" class="name-ref">Result</a>): <a href="index.html#ifNonNull().Result" class="name-ref">Result</a>?<span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L61-L61">Source</a></div>
+                <div class="doc-comment"><p>Returns <code>this |&gt; transform</code> if <code>this</code> is non-null, and <code>null</code> otherwise.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>This method is the complement of the <code>??</code> operator and the equivalent of an <code>Option</code> type's
+<code>map</code> and <code>flatMap</code> methods.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="hasProperty()" class="anchor"> </div>
+            <div id="hasProperty().name" class="anchor-param1"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#hasProperty()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">hasProperty</span>(<span class="param1">name</span>: <a href="../../base/String.html" class="name-ref">String</a>): <a href="../../base/Boolean.html" class="name-ref">Boolean</a><span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L1977-L1977">Source</a></div>
+                <div class="doc-comment"><p>Tells if this object has a property with the given <code>name</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="getProperty()" class="anchor"> </div>
+            <div id="getProperty().name" class="anchor-param1"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#getProperty()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">getProperty</span>(<span class="param1">name</span>: <a href="../../base/String.html" class="name-ref">String</a>): unknown<span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L1982-L1982">Source</a></div>
+                <div class="doc-comment"><p>Returns the value of the property with the given <code>name</code>.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>Throws if a property with this name does not exist.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="getPropertyOrNull()" class="anchor"> </div>
+            <div id="getPropertyOrNull().name" class="anchor-param1"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#getPropertyOrNull()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">getPropertyOrNull</span>(<span class="param1">name</span>: <a href="../../base/String.html" class="name-ref">String</a>): unknown?<span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L1987-L1987">Source</a></div>
+                <div class="doc-comment"><p>Returns the value of the property with the given <code>name</code>.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>Returns <code>null</code> if a property with this name does not exist.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="toDynamic()" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#toDynamic()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">toDynamic</span>(): <a href="../../base/Dynamic.html" class="name-ref">Dynamic</a><span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L1990-L1990">Source</a></div>
+                <div class="doc-comment"><p>Converts this object to a <a href="../../base/Dynamic.html"><code>Dynamic</code></a> object.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="toMap()" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#toMap()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">toMap</span>(): <a href="../../base/Map.html" class="name-ref">Map</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>, unknown&gt;<span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L1993-L1993">Source</a></div>
+                <div class="doc-comment"><p>Converts this object to a <a href="../../base/Map.html"><code>Map</code></a>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="relativePathTo()" class="anchor"> </div>
+            <div id="relativePathTo().other" class="anchor-param1"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#relativePathTo()">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">function </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><span class="name-decl">relativePathTo</span>(<span class="param1">other</span>: <a href="../../base/Module.html" class="name-ref">Module</a>): <a href="../../base/List.html" class="name-ref">List</a>&lt;<a href="../../base/String.html" class="name-ref">String</a>&gt;<span class="context"> (<a href="../../base" class="name-ref">pkl.base</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/base.pkl#L98-L98">Source</a></div>
+                <div class="doc-comment"><p>Returns the relative, descendent directory path between this module and <code>other</code>.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>Throws if no such path exists.</p>
+<p>For example, if module <code>mod1</code> has path <code>/dir1/mod1.pkl</code>, and module <code>mod2</code> has path
+<code>/dir1/dir2/dir3/mod2.pkl</code>, then <code>mod1.relativePathTo(mod2)</code> will return
+<code>List(&quot;dir2&quot;, &quot;dir3&quot;)</code>.</p>
+<p>A common use case is to compute the directory path between a template located at the root of a
+hierarchy (say <code>rootModule.pkl</code>) and the currently evaluated module (accessible via the
+<code>module</code> keyword):</p>
+<pre><code>import &quot;rootModule.pkl&quot; // self-import
+path = rootModule.relativePathTo(module)
+</code></pre></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="member-group">
+        <div id="_classes" class="anchor"> </div>
+        <h2 class="member-group-title">Classes<span class="toggle-inherited-members">(<span class="toggle-inherited-members-link button-link">show inherited</span>)</span></h2>
+        <ul>
+          <li>
+            <div id="License" class="anchor"> </div>
+            <div class="member with-page-link inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#License">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">class </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/License.html" class="name-decl">License</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L23-L29">Source</a></div>
+                <div class="doc-comment"><p>License metadata published in the generated <code>pom.xml</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="VersionControl" class="anchor"> </div>
+            <div class="member with-page-link inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#VersionControl">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">class </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/VersionControl.html" class="name-decl">VersionControl</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L32-L44">Source</a></div>
+                <div class="doc-comment"><p>Version-control metadata published in the generated <code>pom.xml</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="Developer" class="anchor"> </div>
+            <div class="member with-page-link inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#Developer">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">class </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/Developer.html" class="name-decl">Developer</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L47-L62">Source</a></div>
+                <div class="doc-comment"><p>Developer metadata published in the generated <code>pom.xml</code>.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="PomSettings" class="anchor"> </div>
+            <div class="member with-page-link inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#PomSettings">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">class </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/PomSettings.html" class="name-decl">PomSettings</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L65-L83">Source</a></div>
+                <div class="doc-comment"><p>Configuration for the <code>pom.xml</code> metadata file published with this module.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="MillBuild" class="anchor"> </div>
+            <div class="member with-page-link inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#MillBuild">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">class </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/MillBuild.html" class="name-decl">MillBuild</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L86-L107">Source</a></div>
+                <div class="doc-comment"><p>Configuration for the meta-build in <code>mill-build</code>.</p></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="member-group">
+        <div id="_type-aliases" class="anchor"> </div>
+        <h2 class="member-group-title">Type Aliases<span class="toggle-inherited-members">(<span class="toggle-inherited-members-link button-link">show inherited</span>)</span></h2>
+        <ul>
+          <li>
+            <div id="NonSlashString" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed"><a class="member-selflink material-icons" href="#NonSlashString">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">typealias </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/index.html#NonSlashString" class="name-decl">NonSlashString</a> = <a href="../../base/String.html" class="name-ref">String</a>(!contains(&quot;/&quot;))<span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L12-L12">Source</a></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="DepCoordinate" class="anchor"> </div>
+            <div class="member inherited expandable hidden collapsed with-expandable-docs"><i class="material-icons expandable-docs-icon">expand_more</i><a class="member-selflink material-icons" href="#DepCoordinate">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">typealias </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="../../api/Module/index.html#DepCoordinate" class="name-decl">DepCoordinate</a> = <a href="../../base/String.html" class="name-ref">String</a><span class="context"> (<a href="../../api/Module/index.html" class="name-ref">pkl.api.Module</a>)</span><a class="member-source-link" href="https://github.com/apple/pkl/blob/0.31.0/stdlib/stdlib/api.Module.pkl#L20-L20">Source</a></div>
+                <div class="doc-comment"><p>A Mill dependency coordinate.</p></div>
+                <div class="doc-comment expandable hidden collapsed"><p>These are usually Maven / Ivy-style coordinates such as <code>org:name:version</code>
+for Java artifacts or <code>org::name:version</code> for Scala cross-published
+artifacts. The accepted syntax is broader than plain Maven GAV because Mill
+supports cross versions and additional dependency metadata.</p></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div id="KotlinLanguageOrApiVersion" class="anchor"> </div>
+            <div class="member"><a class="member-selflink material-icons" href="#KotlinLanguageOrApiVersion">link</a>
+              <div class="member-left">
+                <div class="member-modifiers">typealias </div>
+              </div>
+              <div class="member-main">
+                <div class="member-signature"><a href="index.html#KotlinLanguageOrApiVersion" class="name-decl">KotlinLanguageOrApiVersion</a> = <a href="../../base/String.html" class="name-ref">String</a>(matches(Regex(#&quot;^\d+\.\d+$&quot;#)))<a class="member-source-link" href="https://github.com/com-lihaoyi/mill/blob/main/integration/feature/pkl-config/resources/pkl//kotlinlib/KotlinModule.pkl#L9-L9">Source</a></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>

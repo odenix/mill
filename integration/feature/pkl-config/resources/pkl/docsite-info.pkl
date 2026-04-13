@@ -1,0 +1,6 @@
+/// API documentation for the Mill Pkl schema.
+///
+/// This site documents the Pkl schema for Mill modules.
+amends "pkl:DocsiteInfo"
+
+title = "Mill Pkl Schema"

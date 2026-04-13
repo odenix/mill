@@ -1,9 +1,0 @@
-open module JavaModule
-
-extends "Module.pkl"
-
-javacOptions: Listing<String>?
-
-errorProneDeps: Listing<String>?
-errorProneOptions: Listing<String>?
-errorProneJavacEnableOptions: Listing<String>?

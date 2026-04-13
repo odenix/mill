@@ -1,0 +1,54 @@
+package build
+
+import mill.*
+import mill.api.PathRef
+
+val schemaRoot = moduleDir / os.up / "pkl"
+val siteRoot = moduleDir / "site"
+
+def schemaModules = Task {
+  Seq(
+    "docsite-info.pkl",
+    "doc-package-info.pkl",
+    "api/Module.pkl",
+    "api/Trait.pkl",
+    "javalib/JavaModule.pkl",
+    "javalib/TestModule.pkl",
+    "javalib/spotless/SpotlessModule.pkl",
+    "scalalib/ScalaModule.pkl",
+    "scalalib/scalafmt/ScalafmtModule.pkl",
+    "kotlinlib/KotlinModule.pkl"
+  )
+}
+
+def pkldocExe = Task {
+  sys.env
+    .get("PKLDOC_EXE")
+    .map(path => os.Path(path, os.root))
+    .getOrElse(os.Path("D:/app/pkldoc-windows-amd64.exe", os.root))
+}
+
+def pkldoc() = Task.Command {
+  val exe = pkldocExe()
+  if (!os.exists(exe)) {
+    Task.fail(
+      s"pkldoc executable not found at $exe. Set PKLDOC_EXE or install pkldoc there."
+    )
+  }
+
+  os.remove.all(siteRoot)
+  os.makeDir.all(siteRoot)
+
+  val args = Seq(
+    "--no-project",
+    "--root-dir",
+    schemaRoot.toString,
+    "--working-dir",
+    schemaRoot.toString,
+    "--output-dir",
+    siteRoot.toString
+  ) ++ schemaModules()
+
+  os.proc(exe, args).call(cwd = schemaRoot)
+  PathRef(siteRoot)
+}

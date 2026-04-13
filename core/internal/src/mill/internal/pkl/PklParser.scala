@@ -9,13 +9,6 @@ import scala.jdk.CollectionConverters.*
 import scala.util.Using
 
 object PklParser {
-  private val extendsMapping = Map(
-    "Module" -> "Module",
-    "ScalaModule" -> "mill.scalalib.ScalaModule",
-    "JavaModule" -> "mill.javalib.JavaModule",
-    "KotlinModule" -> "mill.kotlinlib.KotlinModule"
-  )
-
   private val depFieldNames = Set(
     "moduleDeps",
     "compileModuleDeps",
@@ -51,14 +44,16 @@ object PklParser {
   }
 
   private def convertModule(scriptFile: os.Path, module: org.pkl.core.PModule): HeaderData =
-    convertModule(scriptFile, module.getClassInfo.getModuleName, module.getProperties.asScala.toMap)
+    convertModule(scriptFile, module.getClassInfo, module.getProperties.asScala.toMap)
 
   private def convertModule(
       scriptFile: os.Path,
-      moduleName: String,
+      classInfo: org.pkl.core.PClassInfo[?],
       props: Map[String, Any]
   ): HeaderData = {
-    val extendsValue = extendsMapping.get(moduleName).toSeq.map(Located(scriptFile, 0, _))
+    val extendsValue =
+      (moduleExtendsName(classInfo).toSeq ++ readTraitExtends(scriptFile, props.get("traits")))
+        .map(Located(scriptFile, 0, _))
 
     HeaderData(
       `extends` = Located(scriptFile, 0, OneOrMore(extendsValue)),
@@ -69,6 +64,20 @@ object PklParser {
       bomModuleDeps = Located(scriptFile, 0, Appendable(readDeps(scriptFile, props.get("bomModuleDeps")))),
       rest = collectRest(scriptFile, props)
     )
+  }
+
+  private def moduleExtendsName(classInfo: org.pkl.core.PClassInfo[?]): Option[String] = {
+    if (!classInfo.isModuleClass()) None
+    else {
+      val schemaSegments = schemaPathSegments(classInfo)
+      schemaSegments match {
+        case Seq("api", "Module") => Some("Module")
+        case Seq("javalib", "JavaModule") => Some("mill.javalib.JavaModule")
+        case Seq("scalalib", "ScalaModule") => Some("mill.scalalib.ScalaModule")
+        case Seq("kotlinlib", "KotlinModule") => Some("mill.kotlinlib.KotlinModule")
+        case _ => None
+      }
+    }
   }
 
   private def readDeps(scriptFile: os.Path, valueOpt: Option[Any]): Seq[Located[String]] =
@@ -85,16 +94,89 @@ object PklParser {
       props: Map[String, Any]
   ): Map[Located[String], BufferedValue] = {
     val builder = Map.newBuilder[Located[String], BufferedValue]
+    appendTraitProperties(scriptFile, props.get("traits"), builder)
     props.iterator.foreach {
       case (name, _) if depFieldNames(name) => ()
       case ("modules", value) =>
         builder ++= convertModules(scriptFile, value)
+      case ("traits", _) => ()
       case (name, value) =>
         toBufferedValue(scriptFile, value).foreach { buffered =>
           builder += Located(scriptFile, 0, rootKeyMapping.getOrElse(name, name)) -> buffered
         }
     }
     builder.result()
+  }
+
+  private def readTraitExtends(scriptFile: os.Path, valueOpt: Option[Any]): Seq[String] =
+    valueOpt match {
+      case Some(xs: java.util.List[?]) =>
+        xs.asScala.collect { case obj: org.pkl.core.PObject => traitExtendsName(scriptFile, obj) }.toSeq
+      case Some(xs: Seq[?]) =>
+        xs.collect { case obj: org.pkl.core.PObject => traitExtendsName(scriptFile, obj) }
+      case _ => Nil
+    }
+
+  private def traitExtendsName(scriptFile: os.Path, obj: org.pkl.core.PObject): String = {
+    val classInfo = obj.getClassInfo
+    traitExtendsName(classInfo).getOrElse(
+      throw new mill.api.daemon.Result.Exception(
+        s"Unsupported Pkl trait `${classInfo.getQualifiedName}` in ${scriptFile.last}"
+      )
+    )
+  }
+
+  private def traitExtendsName(classInfo: org.pkl.core.PClassInfo[?]): Option[String] = {
+    val schemaPath = schemaPathSegments(classInfo)
+    val classSuffix =
+      if (classInfo.isModuleClass()) Nil
+      else Seq(classInfo.getSimpleName)
+
+    schemaPath match {
+      case Seq("api", _*) => None
+      case head +: rest => Some((Seq("mill", head) ++ rest ++ classSuffix).mkString("."))
+      case _ => None
+    }
+  }
+
+  private def schemaPathSegments(classInfo: org.pkl.core.PClassInfo[?]): Seq[String] = {
+    val uri = classInfo.getModuleUri
+    if (uri == null || uri.getScheme != "file") Seq.empty
+    else {
+      val path = os.Path(java.nio.file.Path.of(uri), mill.api.BuildCtx.workspaceRoot)
+      val segments = path.segments.toSeq
+      segments.lastOption match {
+        case Some(fileName) if fileName.endsWith(".pkl") =>
+          val withoutExt = fileName.stripSuffix(".pkl")
+          segments.indexOf("pkl") match {
+            case -1 => Seq.empty
+            case idx => segments.slice(idx + 1, segments.length - 1) :+ withoutExt
+          }
+        case _ => Seq.empty
+      }
+    }
+  }
+
+  private def appendTraitProperties(
+      scriptFile: os.Path,
+      valueOpt: Option[Any],
+      builder: scala.collection.mutable.Builder[(Located[String], BufferedValue), Map[Located[String], BufferedValue]]
+  ): Unit = {
+    val traitObjects = valueOpt match {
+      case Some(xs: java.util.List[?]) => xs.asScala.collect { case obj: org.pkl.core.PObject => obj }.toSeq
+      case Some(xs: Seq[?]) => xs.collect { case obj: org.pkl.core.PObject => obj }
+      case _ => Nil
+    }
+    traitObjects.foreach { obj =>
+      obj.getProperties.asScala.iterator.foreach {
+        case ("modules", value) =>
+          builder ++= convertModules(scriptFile, value)
+        case (name, value) =>
+          toBufferedValue(scriptFile, value).foreach { buffered =>
+            builder += Located(scriptFile, 0, rootKeyMapping.getOrElse(name, name)) -> buffered
+          }
+      }
+    }
   }
 
   private def convertModules(
@@ -107,7 +189,7 @@ object PklParser {
           Located(scriptFile, 0, s"object $name") -> headerDataToBufferedValue(convertModule(scriptFile, module))
         case (name: String, obj: org.pkl.core.PObject) =>
           Located(scriptFile, 0, s"object $name") -> headerDataToBufferedValue(
-            convertModule(scriptFile, obj.getClassInfo.getModuleName, obj.getProperties.asScala.toMap)
+            convertModule(scriptFile, obj.getClassInfo, obj.getProperties.asScala.toMap)
           )
       }.toSeq
     case _ => Seq.empty

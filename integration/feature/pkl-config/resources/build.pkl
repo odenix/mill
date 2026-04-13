@@ -1,13 +1,30 @@
-amends "pkl/JavaModule.pkl"
+amends "pkl/javalib/JavaModule.pkl"
 
-import "pkl/JavaModule.pkl"
+import "pkl/javalib/TestModule.pkl"
+import "pkl/javalib/spotless/SpotlessModule.pkl"
 
-sources { "app-src/" }
+sources { "src/" }
 moduleDeps { "lib" }
 
 modules {
-  ["lib"] = new JavaModule {
-    sources { "lib-src/" }
+  ["lib"] {
+    traits {
+      new TestModule.Junit6 {
+      }
+      new SpotlessModule {
+        spotlessFormats {
+          new SpotlessModule.Format {
+            includes { "glob:**.java" }
+            steps {
+              new SpotlessModule.GoogleJavaFormat {
+                style = "GOOGLE"
+              }
+            }
+          }
+        }
+      }
+    }
+    sources { "src/" }
     javacOptions { "-Xlint:deprecation" }
   }
 }

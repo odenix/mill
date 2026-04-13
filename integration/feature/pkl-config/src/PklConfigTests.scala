@@ -14,7 +14,7 @@ object PklConfigTests extends UtestIntegrationTestSuite {
 
       val sourcesRes = tester.eval(("show", "sources"))
       assert(sourcesRes.isSuccess)
-      assert(sourcesRes.out.replace("\\\\", "/").contains("/app-src"))
+      assert(sourcesRes.out.replace("\\\\", "/").contains("/src"))
 
       val compileTask = allTasks
         .map(_.trim)
