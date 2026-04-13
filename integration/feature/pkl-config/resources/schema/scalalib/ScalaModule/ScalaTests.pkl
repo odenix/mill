@@ -1,7 +1,0 @@
-/// Core schema for Scala test modules.
-///
-/// This corresponds to Mill's
-/// [mill.scalalib.ScalaModule.ScalaTests](https://mill-build.org/api/latest/mill/scalalib/ScalaModule%24%24ScalaTests.html).
-open module mill.scalalib.ScalaModule.ScalaTests
-
-extends "../ScalaModule.pkl"

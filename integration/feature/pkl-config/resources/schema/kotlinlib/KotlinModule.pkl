@@ -6,6 +6,8 @@ open module mill.kotlinlib.KotlinModule
 
 extends "../javalib/JavaModule.pkl"
 
+import "../kotlinlib/KotlinModule.pkl" as ThisModule
+
 typealias KotlinLanguageOrApiVersion = String(matches(Regex(#"^\d+\.\d+$"#)))
 
 /// Kotlin version used for the compiler, API level, and language level.
@@ -31,3 +33,9 @@ kotlincPluginMvnDeps: Listing<String>?
 ///
 /// If no module type is specified, defaults to [KotlinModule].
 modules: Mapping<String, *module | Module>?
+
+/// Kotlin test modules nested under a Kotlin module.
+///
+/// This corresponds to Mill's
+/// [mill.kotlinlib.KotlinModule.KotlinTests](https://mill-build.org/api/latest/mill/kotlinlib/KotlinModule%24%24KotlinTests.html).
+open class KotlinTests extends ThisModule

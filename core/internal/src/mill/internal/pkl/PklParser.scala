@@ -67,21 +67,25 @@ object PklParser {
   }
 
   private def moduleExtendsName(classInfo: org.pkl.core.PClassInfo[?]): Option[String] = {
-    if (!classInfo.isModuleClass()) None
-    else {
-      val schemaSegments = schemaPathSegments(classInfo)
-      schemaSegments match {
-        case Seq("api", "Module") => Some("Module")
-        case Seq("javalib", "JavaModule") => Some("mill.javalib.JavaModule")
-        case Seq("javalib", "JavaModule", "JavaTests") => Some("mill.javalib.JavaModule.JavaTests")
-        case Seq("scalalib", "ScalaModule") => Some("mill.scalalib.ScalaModule")
-        case Seq("scalalib", "ScalaModule", "ScalaTests") =>
-          Some("mill.scalalib.ScalaModule.ScalaTests")
-        case Seq("kotlinlib", "KotlinModule") => Some("mill.kotlinlib.KotlinModule")
-        case Seq("kotlinlib", "KotlinModule", "KotlinTests") =>
-          Some("mill.kotlinlib.KotlinModule.KotlinTests")
-        case _ => None
-      }
+    val schemaSegments = schemaPathSegments(classInfo)
+    val effectiveSegments =
+      if (
+        !classInfo.isModuleClass() &&
+        schemaSegments.nonEmpty &&
+        schemaSegments.last != classInfo.getSimpleName
+      )
+        schemaSegments :+ classInfo.getSimpleName
+      else schemaSegments
+
+    effectiveSegments match {
+      case Seq("api", "Module") if classInfo.isModuleClass() => Some("Module")
+      case Seq("javalib", "JavaModule") if classInfo.isModuleClass() => Some("mill.javalib.JavaModule")
+      case Seq("javalib", "JavaModule", "JavaTests") => Some("mill.javalib.JavaModule.JavaTests")
+      case Seq("scalalib", "ScalaModule") if classInfo.isModuleClass() => Some("mill.scalalib.ScalaModule")
+      case Seq("scalalib", "ScalaModule", "ScalaTests") => Some("mill.scalalib.ScalaModule.ScalaTests")
+      case Seq("kotlinlib", "KotlinModule") if classInfo.isModuleClass() => Some("mill.kotlinlib.KotlinModule")
+      case Seq("kotlinlib", "KotlinModule", "KotlinTests") => Some("mill.kotlinlib.KotlinModule.KotlinTests")
+      case _ => None
     }
   }
 

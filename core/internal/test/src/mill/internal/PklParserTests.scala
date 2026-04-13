@@ -33,47 +33,38 @@ object PklParserTests extends TestSuite {
     """open module ScalaModule
       |
       |extends "../api/Module.pkl"
+      |import "../scalalib/ScalaModule.pkl" as ThisModule
       |
       |scalaVersion: String?
       |scalacOptions: Listing<String>?
+      |
+      |open class ScalaTests extends ThisModule
       |""".stripMargin
 
   private val javaModuleSchema =
     """open module JavaModule
       |
       |extends "../api/Module.pkl"
+      |import "../javalib/JavaModule.pkl" as ThisModule
       |
       |javacOptions: Listing<String>?
-      |""".stripMargin
-
-  private val javaTestsSchema =
-    """open module JavaTests
       |
-      |extends "../JavaModule.pkl"
+      |open class JavaTests extends ThisModule
       |""".stripMargin
 
   private val kotlinModuleSchema =
     """open module KotlinModule
       |
       |extends "../javalib/JavaModule.pkl"
+      |import "../kotlinlib/KotlinModule.pkl" as ThisModule
       |
       |kotlinVersion: String?
       |kotlinLanguageVersion: String?
       |kotlinApiVersion: String?
       |kotlincOptions: Listing<String>?
       |kotlincPluginMvnDeps: Listing<String>?
-      |""".stripMargin
-
-  private val kotlinTestsSchema =
-    """open module KotlinTests
       |
-      |extends "../KotlinModule.pkl"
-      |""".stripMargin
-
-  private val scalaTestsSchema =
-    """open module ScalaTests
-      |
-      |extends "../ScalaModule.pkl"
+      |open class KotlinTests extends ThisModule
       |""".stripMargin
 
   private val testModuleSchema =
@@ -339,15 +330,21 @@ object PklParserTests extends TestSuite {
         ))
     }
 
-    test("parseHeaderData maps JavaTests as a primary module kind") {
+    test("parseHeaderData maps JavaTests as a nested module kind") {
       val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
       writeSchema(workspace)
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../schema/javalib/JavaModule/JavaTests.pkl"
+        """amends "../schema/javalib/JavaModule.pkl"
           |
-          |javacOptions { "-Xlint:deprecation" }
+          |import "../schema/javalib/JavaModule.pkl" as JavaModule
+          |
+          |modules {
+          |  ["test"] = new JavaModule.JavaTests {
+          |    javacOptions { "-Xlint:deprecation" }
+          |  }
+          |}
           |""".stripMargin,
         createFolders = true
       )
@@ -358,27 +355,35 @@ object PklParserTests extends TestSuite {
         case failure => throw new java.lang.AssertionError(failure.toString)
       }
 
-      assert(
-        headerData.`extends`.value.value.map(_.value) ==
-          Seq("mill.javalib.JavaModule.JavaTests")
+      val nested = BufferedValue.transform(
+        restValue(headerData, "object test"),
+        HeaderData.headerDataReader(buildFile)
       )
-      assert(restValue(headerData, "javacOptions") ==
+
+      assert(nested.`extends`.value.value.map(_.value) == Seq("mill.javalib.JavaModule.JavaTests"))
+      assert(restValue(nested, "javacOptions") ==
         BufferedValue.Arr(
           collection.mutable.ArrayBuffer(BufferedValue.Str("-Xlint:deprecation", 0)),
           0
         ))
     }
 
-    test("parseHeaderData maps ScalaTests as a primary module kind") {
+    test("parseHeaderData maps ScalaTests as a nested module kind") {
       val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
       writeSchema(workspace)
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../schema/scalalib/ScalaModule/ScalaTests.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
-          |scalaVersion = "3.7.4"
-          |scalacOptions { "-deprecation" }
+          |import "../schema/scalalib/ScalaModule.pkl" as ScalaModule
+          |
+          |modules {
+          |  ["test"] = new ScalaModule.ScalaTests {
+          |    scalaVersion = "3.7.4"
+          |    scalacOptions { "-deprecation" }
+          |  }
+          |}
           |""".stripMargin,
         createFolders = true
       )
@@ -389,28 +394,36 @@ object PklParserTests extends TestSuite {
         case failure => throw new java.lang.AssertionError(failure.toString)
       }
 
-      assert(
-        headerData.`extends`.value.value.map(_.value) ==
-          Seq("mill.scalalib.ScalaModule.ScalaTests")
+      val nested = BufferedValue.transform(
+        restValue(headerData, "object test"),
+        HeaderData.headerDataReader(buildFile)
       )
-      assert(restValue(headerData, "scalaVersion") == BufferedValue.Str("3.7.4", 0))
-      assert(restValue(headerData, "scalacOptions") ==
+
+      assert(nested.`extends`.value.value.map(_.value) == Seq("mill.scalalib.ScalaModule.ScalaTests"))
+      assert(restValue(nested, "scalaVersion") == BufferedValue.Str("3.7.4", 0))
+      assert(restValue(nested, "scalacOptions") ==
         BufferedValue.Arr(
           collection.mutable.ArrayBuffer(BufferedValue.Str("-deprecation", 0)),
           0
         ))
     }
 
-    test("parseHeaderData maps KotlinTests as a primary module kind") {
+    test("parseHeaderData maps KotlinTests as a nested module kind") {
       val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
       writeSchema(workspace)
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../schema/kotlinlib/KotlinModule/KotlinTests.pkl"
+        """amends "../schema/kotlinlib/KotlinModule.pkl"
           |
-          |kotlinVersion = "2.2.0"
-          |kotlincOptions { "-Xcontext-receivers" }
+          |import "../schema/kotlinlib/KotlinModule.pkl" as KotlinModule
+          |
+          |modules {
+          |  ["test"] = new KotlinModule.KotlinTests {
+          |    kotlinVersion = "2.2.0"
+          |    kotlincOptions { "-Xcontext-receivers" }
+          |  }
+          |}
           |""".stripMargin,
         createFolders = true
       )
@@ -421,12 +434,14 @@ object PklParserTests extends TestSuite {
         case failure => throw new java.lang.AssertionError(failure.toString)
       }
 
-      assert(
-        headerData.`extends`.value.value.map(_.value) ==
-          Seq("mill.kotlinlib.KotlinModule.KotlinTests")
+      val nested = BufferedValue.transform(
+        restValue(headerData, "object test"),
+        HeaderData.headerDataReader(buildFile)
       )
-      assert(restValue(headerData, "kotlinVersion") == BufferedValue.Str("2.2.0", 0))
-      assert(restValue(headerData, "kotlincOptions") ==
+
+      assert(nested.`extends`.value.value.map(_.value) == Seq("mill.kotlinlib.KotlinModule.KotlinTests"))
+      assert(restValue(nested, "kotlinVersion") == BufferedValue.Str("2.2.0", 0))
+      assert(restValue(nested, "kotlincOptions") ==
         BufferedValue.Arr(
           collection.mutable.ArrayBuffer(BufferedValue.Str("-Xcontext-receivers", 0)),
           0
@@ -1016,22 +1031,7 @@ object PklParserTests extends TestSuite {
     os.write.over(schemaDir / "api" / "Trait.pkl", traitSchema, createFolders = true)
     os.write.over(schemaDir / "scalalib" / "ScalaModule.pkl", scalaModuleSchema, createFolders = true)
     os.write.over(schemaDir / "javalib" / "JavaModule.pkl", javaModuleSchema, createFolders = true)
-    os.write.over(
-      schemaDir / "javalib" / "JavaModule" / "JavaTests.pkl",
-      javaTestsSchema,
-      createFolders = true
-    )
     os.write.over(schemaDir / "kotlinlib" / "KotlinModule.pkl", kotlinModuleSchema, createFolders = true)
-    os.write.over(
-      schemaDir / "kotlinlib" / "KotlinModule" / "KotlinTests.pkl",
-      kotlinTestsSchema,
-      createFolders = true
-    )
-    os.write.over(
-      schemaDir / "scalalib" / "ScalaModule" / "ScalaTests.pkl",
-      scalaTestsSchema,
-      createFolders = true
-    )
     os.write.over(schemaDir / "javalib" / "TestModule.pkl", testModuleSchema, createFolders = true)
     os.write.over(
       schemaDir / "javalib" / "spotless" / "SpotlessModule.pkl",

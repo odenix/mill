@@ -6,6 +6,8 @@ open module mill.javalib.JavaModule
 
 extends "../api/Module.pkl"
 
+import "../javalib/JavaModule.pkl" as ThisModule
+
 /// Options passed to the Java compiler.
 ///
 /// When a custom JVM is configured, this may also include runtime flags for the
@@ -25,3 +27,9 @@ errorProneJavacEnableOptions: Listing<String>?
 ///
 /// If no module type is specified, defaults to [JavaModule].
 modules: Mapping<String, *module | Module>?
+
+/// Java test modules nested under a Java module.
+///
+/// This corresponds to Mill's
+/// [mill.javalib.JavaModule.JavaTests](https://mill-build.org/api/latest/mill/javalib/JavaModule%24%24JavaTests.html).
+open class JavaTests extends ThisModule
