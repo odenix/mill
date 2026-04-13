@@ -35,6 +35,7 @@ object PklParserTests extends TestSuite {
       |extends "../api/Module.pkl"
       |
       |scalaVersion: String?
+      |scalacOptions: Listing<String>?
       |""".stripMargin
 
   private val javaModuleSchema =
@@ -43,6 +44,12 @@ object PklParserTests extends TestSuite {
       |extends "../api/Module.pkl"
       |
       |javacOptions: Listing<String>?
+      |""".stripMargin
+
+  private val javaTestsSchema =
+    """open module JavaTests
+      |
+      |extends "../JavaModule.pkl"
       |""".stripMargin
 
   private val kotlinModuleSchema =
@@ -57,10 +64,30 @@ object PklParserTests extends TestSuite {
       |kotlincPluginMvnDeps: Listing<String>?
       |""".stripMargin
 
+  private val kotlinTestsSchema =
+    """open module KotlinTests
+      |
+      |extends "../KotlinModule.pkl"
+      |""".stripMargin
+
+  private val scalaTestsSchema =
+    """open module ScalaTests
+      |
+      |extends "../ScalaModule.pkl"
+      |""".stripMargin
+
   private val testModuleSchema =
     """module TestModule
       |
       |import "../api/Trait.pkl"
+      |
+      |class TestNg extends Trait {
+      |  testngVersion: String?
+      |}
+      |
+      |class Junit4 extends Trait {
+      |  junit4Version: String?
+      |}
       |
       |open class Junit5 extends Trait {
       |  junitPlatformVersion: String?
@@ -73,6 +100,35 @@ object PklParserTests extends TestSuite {
       |
       |class Specs2 extends Trait {
       |  specs2Version: String?
+      |}
+      |
+      |class ScalaTest extends Trait {
+      |  scalaTestVersion: String?
+      |  scalaTestStyles: Listing<String>?
+      |}
+      |
+      |class Utest extends Trait {
+      |  utestVersion: String?
+      |}
+      |
+      |class Munit extends Trait {
+      |  munitVersion: String?
+      |}
+      |
+      |class Weaver extends Trait {
+      |  weaverVersion: String?
+      |}
+      |
+      |class ZioTest extends Trait {
+      |  zioTestVersion: String?
+      |}
+      |
+      |class ScalaCheck extends Trait {
+      |  scalaCheckVersion: String?
+      |}
+      |
+      |class Spock extends Junit5 {
+      |  spockVersion: String?
       |}
       |""".stripMargin
 
@@ -283,6 +339,100 @@ object PklParserTests extends TestSuite {
         ))
     }
 
+    test("parseHeaderData maps JavaTests as a primary module kind") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/javalib/JavaModule/JavaTests.pkl"
+          |
+          |javacOptions { "-Xlint:deprecation" }
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.javalib.JavaModule.JavaTests")
+      )
+      assert(restValue(headerData, "javacOptions") ==
+        BufferedValue.Arr(
+          collection.mutable.ArrayBuffer(BufferedValue.Str("-Xlint:deprecation", 0)),
+          0
+        ))
+    }
+
+    test("parseHeaderData maps ScalaTests as a primary module kind") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule/ScalaTests.pkl"
+          |
+          |scalaVersion = "3.7.4"
+          |scalacOptions { "-deprecation" }
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule.ScalaTests")
+      )
+      assert(restValue(headerData, "scalaVersion") == BufferedValue.Str("3.7.4", 0))
+      assert(restValue(headerData, "scalacOptions") ==
+        BufferedValue.Arr(
+          collection.mutable.ArrayBuffer(BufferedValue.Str("-deprecation", 0)),
+          0
+        ))
+    }
+
+    test("parseHeaderData maps KotlinTests as a primary module kind") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/kotlinlib/KotlinModule/KotlinTests.pkl"
+          |
+          |kotlinVersion = "2.2.0"
+          |kotlincOptions { "-Xcontext-receivers" }
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.kotlinlib.KotlinModule.KotlinTests")
+      )
+      assert(restValue(headerData, "kotlinVersion") == BufferedValue.Str("2.2.0", 0))
+      assert(restValue(headerData, "kotlincOptions") ==
+        BufferedValue.Arr(
+          collection.mutable.ArrayBuffer(BufferedValue.Str("-Xcontext-receivers", 0)),
+          0
+        ))
+    }
+
     test("parseHeaderData lowers trait mixins into extends and flattens trait properties") {
       val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
       writeSchema(workspace)
@@ -383,6 +533,307 @@ object PklParserTests extends TestSuite {
       )
       assert(restValue(headerData, "specs2Version") == BufferedValue.Str("5.5.8", 0))
       assert(!headerData.rest.keys.exists(_.value == "scalacOptions"))
+    }
+
+    test("parseHeaderData lowers Junit4 and preserves junit4Version") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/javalib/JavaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.Junit4 {
+          |    junit4Version = "4.13.2"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.javalib.JavaModule", "mill.javalib.TestModule.Junit4")
+      )
+      assert(restValue(headerData, "junit4Version") == BufferedValue.Str("4.13.2", 0))
+    }
+
+    test("parseHeaderData lowers TestNg and preserves testngVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/javalib/JavaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.TestNg {
+          |    testngVersion = "7.11.0"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.javalib.JavaModule", "mill.javalib.TestModule.TestNg")
+      )
+      assert(restValue(headerData, "testngVersion") == BufferedValue.Str("7.11.0", 0))
+    }
+
+    test("parseHeaderData lowers ScalaTest and preserves ScalaTest-specific fields") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.ScalaTest {
+          |    scalaTestVersion = "3.2.19"
+          |    scalaTestStyles { "funsuite" "freespec" }
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.ScalaTest")
+      )
+      assert(restValue(headerData, "scalaTestVersion") == BufferedValue.Str("3.2.19", 0))
+      assert(restValue(headerData, "scalaTestStyles") ==
+        BufferedValue.Arr(
+          collection.mutable.ArrayBuffer(
+            BufferedValue.Str("funsuite", 0),
+            BufferedValue.Str("freespec", 0)
+          ),
+          0
+        ))
+    }
+
+    test("parseHeaderData lowers Utest and preserves utestVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.Utest {
+          |    utestVersion = "0.8.5"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.Utest")
+      )
+      assert(restValue(headerData, "utestVersion") == BufferedValue.Str("0.8.5", 0))
+    }
+
+    test("parseHeaderData lowers Munit and preserves munitVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.Munit {
+          |    munitVersion = "1.1.1"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.Munit")
+      )
+      assert(restValue(headerData, "munitVersion") == BufferedValue.Str("1.1.1", 0))
+    }
+
+    test("parseHeaderData lowers Weaver and preserves weaverVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.Weaver {
+          |    weaverVersion = "0.8.4"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.Weaver")
+      )
+      assert(restValue(headerData, "weaverVersion") == BufferedValue.Str("0.8.4", 0))
+    }
+
+    test("parseHeaderData lowers ZioTest and preserves zioTestVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.ZioTest {
+          |    zioTestVersion = "2.1.18"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.ZioTest")
+      )
+      assert(restValue(headerData, "zioTestVersion") == BufferedValue.Str("2.1.18", 0))
+    }
+
+    test("parseHeaderData lowers ScalaCheck and preserves scalaCheckVersion") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/scalalib/ScalaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.ScalaCheck {
+          |    scalaCheckVersion = "1.19.0"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.scalalib.ScalaModule", "mill.javalib.TestModule.ScalaCheck")
+      )
+      assert(restValue(headerData, "scalaCheckVersion") == BufferedValue.Str("1.19.0", 0))
+    }
+
+    test("parseHeaderData lowers Spock and preserves both JUnit5 and Spock-specific fields") {
+      val workspace = os.temp.dir(prefix = "mill-pkl-parser-")
+      writeSchema(workspace)
+      val buildFile = workspace / "work" / "build.pkl"
+      os.write.over(
+        buildFile,
+        """amends "../schema/javalib/JavaModule.pkl"
+          |
+          |import "../schema/javalib/TestModule.pkl"
+          |
+          |traits {
+          |  new TestModule.Spock {
+          |    junitPlatformVersion = "1.13.0"
+          |    jupiterVersion = "5.13.0"
+          |    spockVersion = "2.4-M4-groovy-4.0"
+          |  }
+          |}
+          |""".stripMargin,
+        createFolders = true
+      )
+
+      val parsed = mill.internal.pkl.PklParser.parseHeaderData(buildFile)
+      val headerData = parsed match {
+        case Result.Success(value) => value
+        case failure => throw new java.lang.AssertionError(failure.toString)
+      }
+
+      assert(
+        headerData.`extends`.value.value.map(_.value) ==
+          Seq("mill.javalib.JavaModule", "mill.javalib.TestModule.Spock")
+      )
+      assert(restValue(headerData, "junitPlatformVersion") == BufferedValue.Str("1.13.0", 0))
+      assert(restValue(headerData, "jupiterVersion") == BufferedValue.Str("5.13.0", 0))
+      assert(restValue(headerData, "spockVersion") == BufferedValue.Str("2.4-M4-groovy-4.0", 0))
     }
 
     test("parseHeaderData preserves nested Spotless trait configuration") {
@@ -565,7 +1016,22 @@ object PklParserTests extends TestSuite {
     os.write.over(schemaDir / "api" / "Trait.pkl", traitSchema, createFolders = true)
     os.write.over(schemaDir / "scalalib" / "ScalaModule.pkl", scalaModuleSchema, createFolders = true)
     os.write.over(schemaDir / "javalib" / "JavaModule.pkl", javaModuleSchema, createFolders = true)
+    os.write.over(
+      schemaDir / "javalib" / "JavaModule" / "JavaTests.pkl",
+      javaTestsSchema,
+      createFolders = true
+    )
     os.write.over(schemaDir / "kotlinlib" / "KotlinModule.pkl", kotlinModuleSchema, createFolders = true)
+    os.write.over(
+      schemaDir / "kotlinlib" / "KotlinModule" / "KotlinTests.pkl",
+      kotlinTestsSchema,
+      createFolders = true
+    )
+    os.write.over(
+      schemaDir / "scalalib" / "ScalaModule" / "ScalaTests.pkl",
+      scalaTestsSchema,
+      createFolders = true
+    )
     os.write.over(schemaDir / "javalib" / "TestModule.pkl", testModuleSchema, createFolders = true)
     os.write.over(
       schemaDir / "javalib" / "spotless" / "SpotlessModule.pkl",

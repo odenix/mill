@@ -73,8 +73,13 @@ object PklParser {
       schemaSegments match {
         case Seq("api", "Module") => Some("Module")
         case Seq("javalib", "JavaModule") => Some("mill.javalib.JavaModule")
+        case Seq("javalib", "JavaModule", "JavaTests") => Some("mill.javalib.JavaModule.JavaTests")
         case Seq("scalalib", "ScalaModule") => Some("mill.scalalib.ScalaModule")
+        case Seq("scalalib", "ScalaModule", "ScalaTests") =>
+          Some("mill.scalalib.ScalaModule.ScalaTests")
         case Seq("kotlinlib", "KotlinModule") => Some("mill.kotlinlib.KotlinModule")
+        case Seq("kotlinlib", "KotlinModule", "KotlinTests") =>
+          Some("mill.kotlinlib.KotlinModule.KotlinTests")
         case _ => None
       }
     }

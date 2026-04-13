@@ -1,0 +1,7 @@
+/// Core schema for Kotlin test modules.
+///
+/// This corresponds to Mill's
+/// [mill.kotlinlib.KotlinModule.KotlinTests](https://mill-build.org/api/latest/mill/kotlinlib/KotlinModule%24%24KotlinTests.html).
+open module mill.kotlinlib.KotlinModule.KotlinTests
+
+extends "../KotlinModule.pkl"

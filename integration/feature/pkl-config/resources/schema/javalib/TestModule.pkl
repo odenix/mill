@@ -2,6 +2,30 @@ module mill.javalib.TestModule
 
 import "../api/Trait.pkl"
 
+/// Test trait that configures a module to run TestNG.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.TestNg](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24TestNg.html),
+/// omitting members that are already provided by the surrounding module schema.
+class TestNg extends Trait {
+  /// TestNG version to use.
+  ///
+  /// Leave empty to provide the TestNG dependency yourself.
+  testngVersion: String?
+}
+
+/// Test trait that configures a module to run on JUnit 4.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.Junit4](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24Junit4.html),
+/// omitting members that are already provided by the surrounding module schema.
+class Junit4 extends Trait {
+  /// JUnit 4 version to use.
+  ///
+  /// Leave empty to provide the JUnit 4 dependency yourself.
+  junit4Version: String?
+}
+
 /// Test trait that configures a module to run on the JUnit 5 platform.
 ///
 /// This mirrors Mill's
@@ -45,4 +69,93 @@ class Specs2 extends Trait {
   ///
   /// Leave empty to provide the Specs2 dependency yourself.
   specs2Version: String?
+}
+
+/// Test trait that configures a module to run ScalaTest.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.ScalaTest](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24ScalaTest.html),
+/// omitting members that are already provided by the surrounding module schema.
+class ScalaTest extends Trait {
+  /// ScalaTest version to use.
+  ///
+  /// Leave empty to provide the ScalaTest dependency yourself.
+  scalaTestVersion: String?
+
+  /// Optional ScalaTest styles to include instead of the full ScalaTest suite.
+  ///
+  /// Leave empty to use the full ScalaTest dependency.
+  scalaTestStyles: Listing<String>?
+}
+
+/// Test trait that configures a module to run UTest.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.Utest](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24Utest.html),
+/// omitting members that are already provided by the surrounding module schema.
+class Utest extends Trait {
+  /// UTest version to use.
+  ///
+  /// Leave empty to provide the UTest dependency yourself.
+  utestVersion: String?
+}
+
+/// Test trait that configures a module to run MUnit.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.Munit](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24Munit.html),
+/// omitting members that are already provided by the surrounding module schema.
+class Munit extends Trait {
+  /// MUnit version to use.
+  ///
+  /// Leave empty to provide the MUnit dependency yourself.
+  munitVersion: String?
+}
+
+/// Test trait that configures a module to run Weaver.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.Weaver](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24Weaver.html),
+/// omitting members that are already provided by the surrounding module schema.
+class Weaver extends Trait {
+  /// Weaver version to use.
+  ///
+  /// Leave empty to provide the Weaver dependency yourself.
+  weaverVersion: String?
+}
+
+/// Test trait that configures a module to run ZIO Test.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.ZioTest](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24ZioTest.html),
+/// omitting members that are already provided by the surrounding module schema.
+class ZioTest extends Trait {
+  /// ZIO Test version to use.
+  ///
+  /// Leave empty to provide the ZIO Test dependency yourself.
+  zioTestVersion: String?
+}
+
+/// Test trait that configures a module to run ScalaCheck.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.ScalaCheck](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24ScalaCheck.html),
+/// omitting members that are already provided by the surrounding module schema.
+class ScalaCheck extends Trait {
+  /// ScalaCheck version to use.
+  ///
+  /// Leave empty to provide the ScalaCheck dependency yourself.
+  scalaCheckVersion: String?
+}
+
+/// Test trait that configures a module to run Spock.
+///
+/// This mirrors Mill's
+/// [mill.javalib.TestModule.Spock](https://mill-build.org/api/latest/mill/javalib/TestModule%24%24Spock.html),
+/// omitting members that are already provided by the surrounding module schema.
+class Spock extends Junit5 {
+  /// Spock version to use.
+  ///
+  /// Leave empty to provide the Spock dependency yourself.
+  spockVersion: String?
 }

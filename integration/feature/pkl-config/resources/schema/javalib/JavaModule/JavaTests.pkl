@@ -1,0 +1,7 @@
+/// Core schema for Java test modules.
+///
+/// This corresponds to Mill's
+/// [mill.javalib.JavaModule.JavaTests](https://mill-build.org/api/latest/mill/javalib/JavaModule%24%24JavaTests.html).
+open module mill.javalib.JavaModule.JavaTests
+
+extends "../JavaModule.pkl"
