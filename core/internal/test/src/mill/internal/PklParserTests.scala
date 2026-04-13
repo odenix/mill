@@ -136,7 +136,7 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/scalalib/ScalaModule.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
           |millVersion = "1.1.0"
           |scalaVersion = "3.7.4"
@@ -168,9 +168,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/scalalib/ScalaModule.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
-          |import "../pkl/javalib/spotless/SpotlessModule.pkl"
+          |import "../schema/javalib/spotless/SpotlessModule.pkl"
           |
           |millVersion = "1.2.3"
           |scalaVersion = "3.7.4"
@@ -208,9 +208,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/scalalib/ScalaModule.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
-          |import "../pkl/javalib/JavaModule.pkl"
+          |import "../schema/javalib/JavaModule.pkl"
           |
           |modules {
           |  ["foo"] = new JavaModule {
@@ -245,7 +245,7 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/kotlinlib/KotlinModule.pkl"
+        """amends "../schema/kotlinlib/KotlinModule.pkl"
           |
           |kotlinVersion = "2.2.0"
           |kotlinLanguageVersion = "2.2"
@@ -289,9 +289,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/javalib/JavaModule.pkl"
+        """amends "../schema/javalib/JavaModule.pkl"
           |
-          |import "../pkl/javalib/TestModule.pkl"
+          |import "../schema/javalib/TestModule.pkl"
           |
           |traits {
           |  new TestModule.Junit5 {
@@ -324,9 +324,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/javalib/JavaModule.pkl"
+        """amends "../schema/javalib/JavaModule.pkl"
           |
-          |import "../pkl/javalib/TestModule.pkl"
+          |import "../schema/javalib/TestModule.pkl"
           |
           |traits {
           |  new TestModule.Junit6 {
@@ -358,9 +358,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/scalalib/ScalaModule.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
-          |import "../pkl/javalib/TestModule.pkl"
+          |import "../schema/javalib/TestModule.pkl"
           |
           |traits {
           |  new TestModule.Specs2 {
@@ -391,9 +391,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/javalib/JavaModule.pkl"
+        """amends "../schema/javalib/JavaModule.pkl"
           |
-          |import "../pkl/javalib/spotless/SpotlessModule.pkl"
+          |import "../schema/javalib/spotless/SpotlessModule.pkl"
           |
           |traits {
           |  new SpotlessModule {
@@ -461,9 +461,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/kotlinlib/KotlinModule.pkl"
+        """amends "../schema/kotlinlib/KotlinModule.pkl"
           |
-          |import "../pkl/javalib/spotless/SpotlessModule.pkl"
+          |import "../schema/javalib/spotless/SpotlessModule.pkl"
           |
           |traits {
           |  new SpotlessModule {
@@ -525,9 +525,9 @@ object PklParserTests extends TestSuite {
       val buildFile = workspace / "work" / "build.pkl"
       os.write.over(
         buildFile,
-        """amends "../pkl/scalalib/ScalaModule.pkl"
+        """amends "../schema/scalalib/ScalaModule.pkl"
           |
-          |import "../pkl/scalalib/scalafmt/ScalafmtModule.pkl"
+          |import "../schema/scalalib/scalafmt/ScalafmtModule.pkl"
           |
           |traits {
           |  new ScalafmtModule {
@@ -560,7 +560,7 @@ object PklParserTests extends TestSuite {
   }
 
   private def writeSchema(workspace: os.Path): Unit = {
-    val schemaDir = workspace / "pkl"
+    val schemaDir = workspace / "schema"
     os.write.over(schemaDir / "api" / "Module.pkl", moduleSchema, createFolders = true)
     os.write.over(schemaDir / "api" / "Trait.pkl", traitSchema, createFolders = true)
     os.write.over(schemaDir / "scalalib" / "ScalaModule.pkl", scalaModuleSchema, createFolders = true)

@@ -1,0 +1,33 @@
+/// Core schema for Kotlin modules.
+///
+/// This corresponds to Mill's
+/// [mill.kotlinlib.KotlinModule](https://mill-build.org/api/latest/mill/kotlinlib/KotlinModule.html).
+open module mill.kotlinlib.KotlinModule
+
+extends "../javalib/JavaModule.pkl"
+
+typealias KotlinLanguageOrApiVersion = String(matches(Regex(#"^\d+\.\d+$"#)))
+
+/// Kotlin version used for the compiler, API level, and language level.
+kotlinVersion: String?
+
+/// Kotlin compiler language version.
+///
+/// By default, Mill derives this from [kotlinVersion].
+kotlinLanguageVersion: KotlinLanguageOrApiVersion?
+
+/// Kotlin compiler API version.
+///
+/// By default, Mill derives this from [kotlinLanguageVersion].
+kotlinApiVersion: KotlinLanguageOrApiVersion?
+
+/// Additional options passed to the Kotlin compiler.
+kotlincOptions: Listing<String>?
+
+/// Kotlin compiler plugins resolved from Maven / Ivy repositories.
+kotlincPluginMvnDeps: Listing<String>?
+
+/// Nested child modules keyed by module name.
+///
+/// If no module type is specified, defaults to [KotlinModule].
+modules: Mapping<String, *module | Module>?

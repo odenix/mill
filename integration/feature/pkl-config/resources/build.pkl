@@ -1,7 +1,7 @@
-amends "pkl/javalib/JavaModule.pkl"
+amends "schema/javalib/JavaModule.pkl"
 
-import "pkl/javalib/TestModule.pkl"
-import "pkl/javalib/spotless/SpotlessModule.pkl"
+import "schema/javalib/TestModule.pkl"
+import "schema/javalib/spotless/SpotlessModule.pkl"
 
 sources { "src/" }
 moduleDeps { "lib" }

@@ -1,54 +1,60 @@
+//| mvnDeps:
+//| - org.pkl-lang:pkl-doc:0.31.0
+//| - org.pkl-lang:pkl-commons-cli:0.31.0
+//| - org.pkl-lang:pkl-core:0.31.0
+
 package build
 
 import mill.*
 import mill.api.PathRef
+import org.pkl.commons.cli.CliBaseOptions
+import org.pkl.doc.{CliDocGenerator, CliDocGeneratorOptions}
+import scala.jdk.CollectionConverters.*
 
-val schemaRoot = moduleDir / os.up / "pkl"
+val schemaRoot = moduleDir / os.up / "schema"
 val siteRoot = moduleDir / "site"
 
 def schemaModules = Task {
-  Seq(
-    "docsite-info.pkl",
-    "doc-package-info.pkl",
-    "api/Module.pkl",
-    "api/Trait.pkl",
-    "javalib/JavaModule.pkl",
-    "javalib/TestModule.pkl",
-    "javalib/spotless/SpotlessModule.pkl",
-    "scalalib/ScalaModule.pkl",
-    "scalalib/scalafmt/ScalafmtModule.pkl",
-    "kotlinlib/KotlinModule.pkl"
-  )
-}
-
-def pkldocExe = Task {
-  sys.env
-    .get("PKLDOC_EXE")
-    .map(path => os.Path(path, os.root))
-    .getOrElse(os.Path("D:/app/pkldoc-windows-amd64.exe", os.root))
+  os.walk(schemaRoot)
+    .filter(path => os.isFile(path) && path.ext == "pkl")
+    .map(path => path.relativeTo(schemaRoot).toString.replace('\\', '/'))
 }
 
 def pkldoc() = Task.Command {
-  val exe = pkldocExe()
-  if (!os.exists(exe)) {
-    Task.fail(
-      s"pkldoc executable not found at $exe. Set PKLDOC_EXE or install pkldoc there."
-    )
-  }
-
   os.remove.all(siteRoot)
   os.makeDir.all(siteRoot)
 
-  val args = Seq(
-    "--no-project",
-    "--root-dir",
-    schemaRoot.toString,
-    "--working-dir",
-    schemaRoot.toString,
-    "--output-dir",
-    siteRoot.toString
-  ) ++ schemaModules()
+  val defaults = new CliBaseOptions()
+  val baseOptions = new CliBaseOptions(
+    schemaModules().map(module => (schemaRoot / os.RelPath(module)).toNIO.toUri).toList.asJava,
+    defaults.getAllowedModules,
+    defaults.getAllowedResources,
+    defaults.getEnvironmentVariables,
+    defaults.getExternalProperties,
+    defaults.getNormalizedModulePath,
+    schemaRoot.toNIO,
+    schemaRoot.toNIO,
+    defaults.getNormalizedSettingsModule,
+    defaults.getNormalizedProjectFile,
+    defaults.getTimeout,
+    defaults.getNormalizedModuleCacheDir,
+    defaults.getColor,
+    defaults.getNoCache,
+    defaults.getOmitProjectSettings,
+    true,
+    defaults.getTestMode,
+    defaults.getTestPort,
+    defaults.getNormalizedCaCertificates,
+    defaults.getHttpProxy,
+    defaults.getHttpNoProxy,
+    defaults.getHttpRewrites,
+    defaults.getExternalModuleReaders,
+    defaults.getExternalResourceReaders,
+    defaults.getTraceMode,
+    defaults.getPowerAssertionsEnabled
+  )
 
-  os.proc(exe, args).call(cwd = schemaRoot)
+  val cliOptions = new CliDocGeneratorOptions(baseOptions, siteRoot.toNIO)
+  new CliDocGenerator(cliOptions).run()
   PathRef(siteRoot)
 }

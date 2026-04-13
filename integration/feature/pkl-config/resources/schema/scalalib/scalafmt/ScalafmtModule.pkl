@@ -1,0 +1,16 @@
+/// Scalafmt support for Scala and build-source formatting.
+///
+/// This mirrors Mill's
+/// [mill.scalalib.scalafmt.ScalafmtModule](https://mill-build.org/api/latest/mill/scalalib/scalafmt/ScalafmtModule.html),
+/// omitting command tasks and derived behavior while preserving the
+/// configurable `scalafmtConfig` surface.
+module mill.scalalib.scalafmt.ScalafmtModule
+
+extends "../../api/Trait.pkl"
+
+/// Candidate `.scalafmt.conf` locations, searched in order.
+///
+/// Mill uses the first existing file from this list and requires that the file
+/// declares a Scalafmt `version`. By default, Mill checks the workspace root
+/// and current working directory.
+scalafmtConfig: Listing<String>?

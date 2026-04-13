@@ -148,7 +148,7 @@ object PklParser {
       segments.lastOption match {
         case Some(fileName) if fileName.endsWith(".pkl") =>
           val withoutExt = fileName.stripSuffix(".pkl")
-          segments.indexOf("pkl") match {
+          segments.indexOf("schema") match {
             case -1 => Seq.empty
             case idx => segments.slice(idx + 1, segments.length - 1) :+ withoutExt
           }
