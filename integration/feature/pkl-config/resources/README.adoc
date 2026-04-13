@@ -1,0 +1,62 @@
+= Pkl PoC Sample
+
+This folder is a small declarative Pkl build that exercises:
+
+* `build.pkl`
+* local schema modules under `pkl/`
+* a nested `lib` module
+* `moduleDeps`
+
+== Try It
+
+Start in the Mill repo root.
+
+From the Mill repo root, build the local launcher and local test repository:
+
+[source,bash]
+----
+./mill dist.raw.launcher dist.raw.localRepo
+----
+
+[source,powershell]
+----
+.\mill dist.raw.launcher dist.raw.localRepo
+----
+
+Then run the sample from this directory. The sample uses relative Pkl imports and source paths, so it must run with `integration/feature/pkl-config/resources` as the working directory.
+
+Bash:
+
+[source,bash]
+----
+REPO_ROOT="$PWD"
+export COURSIER_REPOSITORIES="file://$REPO_ROOT/out/dist/raw/localRepo.dest/|ivy2Local|central"
+cd integration/feature/pkl-config/resources
+MILL_RUN="$REPO_ROOT/out/dist/raw/launcher.dest/run"
+$MILL_RUN runMain app.Main
+----
+
+PowerShell:
+
+[source,powershell]
+----
+$repoRoot = (Get-Location).Path
+$repoUri = $repoRoot -replace '\\', '/'
+$env:COURSIER_REPOSITORIES = "file:///$repoUri/out/dist/raw/localRepo.dest/|ivy2Local|central"
+Set-Location integration\feature\pkl-config\resources
+$millRun = Join-Path $repoRoot "out\dist\raw\launcher.dest\run.bat"
+& $millRun runMain app.Main
+----
+
+If it worked, the sample prints:
+
+[source,text]
+----
+app->lib
+----
+
+Why the `COURSIER_REPOSITORIES` override is needed:
+
+* this fork builds Mill with local `SNAPSHOT` artifacts
+* the launcher needs to resolve those from `out/dist/raw/localRepo.dest`
+* without this override, it may try Maven Central and fail

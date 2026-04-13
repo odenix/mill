@@ -334,7 +334,7 @@ object CodeGen {
         // wrapping original sources
         val supportDestFile = supportDest / packageSegments
         os.write.over(
-          (supportDestFile / os.up) / supportDestFile.baseName,
+          (supportDestFile / os.up) / s"${supportDestFile.baseName}.scala",
           s"""package $pkg
              |import mill.*, scalalib.*, javalib.*, kotlinlib.*
              |$aliasImports

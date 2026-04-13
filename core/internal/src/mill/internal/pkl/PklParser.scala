@@ -12,7 +12,8 @@ object PklParser {
   private val extendsMapping = Map(
     "Module" -> "Module",
     "ScalaModule" -> "mill.scalalib.ScalaModule",
-    "JavaModule" -> "mill.javalib.JavaModule"
+    "JavaModule" -> "mill.javalib.JavaModule",
+    "KotlinModule" -> "mill.kotlinlib.KotlinModule"
   )
 
   private val depFieldNames = Set(

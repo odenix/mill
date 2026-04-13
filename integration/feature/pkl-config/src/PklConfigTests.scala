@@ -12,6 +12,10 @@ object PklConfigTests extends UtestIntegrationTestSuite {
       assert(resolveAllRes.isSuccess)
       val allTasks = resolveAllRes.out.linesIterator.map(_.trim).filter(_.nonEmpty).toSeq
 
+      val sourcesRes = tester.eval(("show", "sources"))
+      assert(sourcesRes.isSuccess)
+      assert(sourcesRes.out.replace("\\\\", "/").contains("/app-src"))
+
       val compileTask = allTasks
         .map(_.trim)
         .find(task => task == "compile" || (task.endsWith(".compile") && !task.startsWith("selective.")))
@@ -33,6 +37,14 @@ object PklConfigTests extends UtestIntegrationTestSuite {
       assert(classpathRes.isSuccess)
       val normalized = classpathRes.out.replace("\\\\", "/")
       assert(normalized.contains("/lib/compile.dest/classes"))
+
+      val mainClassesRes = tester.eval(("show", "allLocalMainClasses"))
+      assert(mainClassesRes.isSuccess)
+      assert(mainClassesRes.out.contains("app.Main"))
+
+      val runMainRes = tester.eval(("runMain", "app.Main"))
+      assert(runMainRes.isSuccess)
+      assert(runMainRes.out.contains("app->lib"))
     }
   }
 }

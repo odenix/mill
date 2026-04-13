@@ -1,0 +1,59 @@
+= Pkl PoC Status
+
+This directory contains the Pkl schema modules used by the declarative Pkl proof of concept.
+
+== What Works
+
+The current PoC supports:
+
+* `build.pkl` and `package.pkl` discovery
+* manual Pkl schema modules with relative `amends` / `extends`
+* conversion from evaluated Pkl modules into Mill's existing `HeaderData`
+* reuse of Mill's existing declarative codegen and evaluation pipeline
+* recursive nested modules via `modules: Mapping<String, Module>?`
+* root and nested config overrides such as `sources`, `javacOptions`, and `moduleDeps`
+
+Currently implemented schema modules:
+
+* [Module.pkl](/D:/prj/mill/pkl/Module.pkl)
+* [JavaModule.pkl](/D:/prj/mill/pkl/JavaModule.pkl)
+* [ScalaModule.pkl](/D:/prj/mill/pkl/ScalaModule.pkl)
+* [KotlinModule.pkl](/D:/prj/mill/pkl/KotlinModule.pkl)
+
+== Sample
+
+A runnable sample build lives in [integration/feature/pkl-config/resources](/D:/prj/mill/integration/feature/pkl-config/resources).
+
+That sample currently proves:
+
+* Pkl build discovery
+* declarative config overrides applied at runtime
+* nested module dependency wiring
+* end-to-end execution via `runMain app.Main`
+* visible successful output of `app->lib`
+
+== Important Fixes
+
+The PoC needed a few real integration fixes:
+
+* Pkl schema modules must be declared as `open module`
+* declarative generated support sources must be written as `*.scala`
+* `build.pkl` files must be forwarded into the same runtime build-override path used by declarative YAML, otherwise task config like `sources` is ignored
+
+== Current Limits
+
+This is still a PoC. Notable gaps:
+
+* no source-position mapping yet
+* no precompiled-module support yet
+* no broad built-in module coverage beyond the current base/Java/Scala/Kotlin slice
+* schema imports currently assume relative file-based resolution
+* the schema shape is designed for the PoC, not yet a finalized user-facing API
+
+== Design Choice
+
+The PoC intentionally reuses Mill's existing declarative architecture:
+
+* Pkl config -> `HeaderData` -> generated Scala support source -> normal Mill evaluation
+
+This is not a new build engine. It is a replacement for the YAML frontend at the parsing/config layer.
