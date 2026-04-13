@@ -1,5 +1,6 @@
 amends "schema/javalib/JavaModule.pkl"
 
+import "schema/javalib/JavaModule.pkl"
 import "schema/javalib/TestModule.pkl"
 import "schema/javalib/spotless/SpotlessModule.pkl"
 
@@ -7,13 +8,14 @@ sources { "src/" }
 moduleDeps { "lib" }
 
 modules {
-  ["lib"] {
+  ["lib"] = new JavaModule {
+    sources { "src/" }
+    javacOptions { "-Xlint:deprecation" }
     traits {
-      new TestModule.Junit6 {
-      }
+      new TestModule.Junit6 {}
       new SpotlessModule {
         spotlessFormats {
-          new SpotlessModule.Format {
+          new {
             includes { "glob:**.java" }
             steps {
               new SpotlessModule.GoogleJavaFormat {
@@ -24,7 +26,5 @@ modules {
         }
       }
     }
-    sources { "src/" }
-    javacOptions { "-Xlint:deprecation" }
   }
 }

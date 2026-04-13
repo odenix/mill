@@ -9,103 +9,6 @@ open module mill.api.Module
 
 import "Trait.pkl"
 
-typealias NonSlashString = String(!contains("/"))
-
-/// A Mill dependency coordinate.
-///
-/// These are usually Maven / Ivy-style coordinates such as `org:name:version`
-/// for Java artifacts or `org::name:version` for Scala cross-published
-/// artifacts. The accepted syntax is broader than plain Maven GAV because Mill
-/// supports cross versions and additional dependency metadata.
-typealias DepCoordinate = String
-
-/// License metadata published in the generated `pom.xml`.
-class License {
-  /// Human-readable license name.
-  name: String
-
-  /// Canonical license URL.
-  url: Uri
-}
-
-/// Version-control metadata published in the generated `pom.xml`.
-class VersionControl {
-  /// Browser URL for the source repository.
-  url: Uri
-
-  /// Read-only SCM connection string.
-  connection: String
-
-  /// Read-write SCM connection string for developers.
-  developerConnection: String
-
-  /// Source-control tag or revision associated with this publication.
-  tag: String?
-}
-
-/// Developer metadata published in the generated `pom.xml`.
-class Developer {
-  /// Developer identifier.
-  id: String
-
-  /// Developer display name.
-  name: String
-
-  /// Developer homepage URL.
-  url: Uri
-
-  /// Optional organization name.
-  organization: String?
-
-  /// Optional organization homepage URL.
-  organizationUrl: Uri?
-}
-
-/// Configuration for the `pom.xml` metadata file published with this module.
-class PomSettings {
-  /// Project description published in the POM.
-  description: String
-
-  /// Maven organization / group identifier used for publication.
-  organization: NonSlashString
-
-  /// Project homepage URL.
-  url: Uri
-
-  /// Declared project licenses.
-  licenses: Listing<License>
-
-  /// Version-control metadata for the project.
-  versionControl: VersionControl
-
-  /// Declared project developers.
-  developers: Listing<Developer>
-}
-
-/// Configuration for the meta-build in `mill-build`.
-class MillBuild {
-  /// Additional BSP script ignore patterns for `mill-build`.
-  bspScriptIgnore: Listing<String>?
-
-  /// Extra repositories used to resolve dependencies for the meta-build.
-  repositories: Listing<String>?
-
-  /// Additional Maven / Ivy dependencies for the meta-build.
-  mvnDeps: Listing<DepCoordinate>?
-
-  /// Compile-only Maven / Ivy dependencies for the meta-build.
-  compileMvnDeps: Listing<DepCoordinate>?
-
-  /// Runtime-only Maven / Ivy dependencies for the meta-build.
-  runMvnDeps: Listing<DepCoordinate>?
-
-  /// Bill of Material (BOM) dependencies for the meta-build.
-  bomMvnDeps: Listing<DepCoordinate>?
-
-  /// Dependency-management entries for the meta-build.
-  depManagement: Listing<DepCoordinate>?
-}
-
 /// Mill version used for this build.
 millVersion: String?
 
@@ -212,3 +115,101 @@ repositories: Listing<String>?
 modules: Mapping<String, Module>?
 
 traits: Listing<Trait>?
+
+typealias NonSlashString = String(!contains("/"))
+
+/// A Mill dependency coordinate.
+///
+/// These are usually Maven / Ivy-style coordinates such as `org:name:version`
+/// for Java artifacts or `org::name:version` for Scala cross-published
+/// artifacts. The accepted syntax is broader than plain Maven GAV because Mill
+/// supports cross versions and additional dependency metadata.
+typealias DepCoordinate = String
+
+/// License metadata published in the generated `pom.xml`.
+class License {
+  /// Human-readable license name.
+  name: String
+
+  /// Canonical license URL.
+  url: Uri
+}
+
+/// Version-control metadata published in the generated `pom.xml`.
+class VersionControl {
+  /// Browser URL for the source repository.
+  url: Uri
+
+  /// Read-only SCM connection string.
+  connection: String
+
+  /// Read-write SCM connection string for developers.
+  developerConnection: String
+
+  /// Source-control tag or revision associated with this publication.
+  tag: String?
+}
+
+/// Developer metadata published in the generated `pom.xml`.
+class Developer {
+  /// Developer identifier.
+  id: String
+
+  /// Developer display name.
+  name: String
+
+  /// Developer homepage URL.
+  url: Uri
+
+  /// Optional organization name.
+  organization: String?
+
+  /// Optional organization homepage URL.
+  organizationUrl: Uri?
+}
+
+/// Configuration for the `pom.xml` metadata file published with this module.
+class PomSettings {
+  /// Project description published in the POM.
+  description: String
+
+  /// Maven organization / group identifier used for publication.
+  organization: NonSlashString
+
+  /// Project homepage URL.
+  url: Uri
+
+  /// Declared project licenses.
+  licenses: Listing<License>
+
+  /// Version-control metadata for the project.
+  versionControl: VersionControl
+
+  /// Declared project developers.
+  developers: Listing<Developer>
+}
+
+/// Configuration for the meta-build in `mill-build`.
+class MillBuild {
+  /// Additional BSP script ignore patterns for `mill-build`.
+  bspScriptIgnore: Listing<String>?
+
+  /// Extra repositories used to resolve dependencies for the meta-build.
+  repositories: Listing<String>?
+
+  /// Additional Maven / Ivy dependencies for the meta-build.
+  mvnDeps: Listing<DepCoordinate>?
+
+  /// Compile-only Maven / Ivy dependencies for the meta-build.
+  compileMvnDeps: Listing<DepCoordinate>?
+
+  /// Runtime-only Maven / Ivy dependencies for the meta-build.
+  runMvnDeps: Listing<DepCoordinate>?
+
+  /// Bill of Material (BOM) dependencies for the meta-build.
+  bomMvnDeps: Listing<DepCoordinate>?
+
+  /// Dependency-management entries for the meta-build.
+  depManagement: Listing<DepCoordinate>?
+}
+

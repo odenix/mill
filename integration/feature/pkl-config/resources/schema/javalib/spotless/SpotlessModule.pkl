@@ -11,6 +11,20 @@ module mill.javalib.spotless.SpotlessModule
 
 extends "../../api/Trait.pkl"
 
+/// Explicit Spotless format definitions.
+///
+/// When unset, Mill first looks for `.spotless-formats.json` in the module
+/// directory. If that file is absent, it falls back to built-in defaults for
+/// Java, Kotlin, and Scala sources.
+spotlessFormats: Listing<Format>?
+
+/// Global path matcher patterns to exclude from formatting.
+///
+/// These patterns are evaluated relative to the module directory. For a root
+/// module, Mill also excludes its standard `out` and BSP output folders by
+/// default.
+spotlessExcludes: Listing<String>?
+
 /// A relative path reference resolved against the current module directory.
 typealias RelPathRef = String
 
@@ -246,7 +260,7 @@ class Ktfmt extends Step {
     "GOOGLE_FORMAT" |
     "KOTLINLANG_FORMAT" |
     String
-  )?
+    )?
 
   /// Maximum formatted line width.
   maxWidth: Int?
@@ -309,16 +323,3 @@ class Format {
   suppressions: Listing<Suppress>?
 }
 
-/// Explicit Spotless format definitions.
-///
-/// When unset, Mill first looks for `.spotless-formats.json` in the module
-/// directory. If that file is absent, it falls back to built-in defaults for
-/// Java, Kotlin, and Scala sources.
-spotlessFormats: Listing<Format>?
-
-/// Global path matcher patterns to exclude from formatting.
-///
-/// These patterns are evaluated relative to the module directory. For a root
-/// module, Mill also excludes its standard `out` and BSP output folders by
-/// default.
-spotlessExcludes: Listing<String>?

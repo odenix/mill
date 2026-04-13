@@ -6,8 +6,6 @@ open module mill.scalalib.ScalaModule
 
 extends "../api/Module.pkl"
 
-import "../scalalib/ScalaModule.pkl" as ThisModule
-
 /// Scala version used to compile this module.
 scalaVersion: String?
 
@@ -30,10 +28,10 @@ scalaNativeVersion: String?
 /// Nested child modules keyed by module name.
 ///
 /// If no module type is specified, defaults to [ScalaModule].
-modules: Mapping<String, *module | Module>?
+modules: Mapping<String, Module>?
 
 /// Scala test modules nested under a Scala module.
 ///
 /// This corresponds to Mill's
 /// [mill.scalalib.ScalaModule.ScalaTests](https://mill-build.org/api/latest/mill/scalalib/ScalaModule%24%24ScalaTests.html).
-open class ScalaTests extends ThisModule
+open class ScalaTests extends module
